@@ -218,6 +218,64 @@ function DashboardRecentTasks() {
         </div>  
     `
 }
+function DashboardActiveProject(content){
+    return `
+        <div class="active-project">
+            <div class="active-project-heading">
+                <h1>${content.heading}</h1>
+                <span class="${content.type === 'ontrack' ? 'ontrack' : content.type==='inprogress' ? 'inprogress' : 'review'}">${content.type === 'ontrack' ? 'On Track' : content.type==='inprogress' ? 'In Progress' : 'Review'}</span>
+            </div>
+            <span class="active-project-description">${content.description}</span>
+            <div class="active-project-progress">
+                <span>
+                    <p>Progress</p>
+                    <p><strong>${content.procent}%</strong></p>
+                </span>
+                <div class="project-progress">
+                    <div class="project-progress-bar ${content.type === 'ontrack' ? 'ontrack' : content.type==='inprogress' ? 'inprogress' : 'review'}"></div>
+                </div>
+            </div>
+            <span class="active-project-ending">${content.timeToEnd}</span>
+        </div>
+    `
+}
+function DashboardActiveProjects(){
+    const content = [
+        {
+            type:"ontrack",
+            description:"Upgrading backend infrastructure for better performance",
+            heading:"Backend Infrastructure",
+            procent:60,
+            timeToEnd:"Due Apr 15, 2025"
+        },{
+            type:"inprogress",
+            description:"Redesigning the mobile app interface for better user experience",
+            heading:"Mobile App Redesign",
+            procent:75,
+            timeToEnd:"Due Mar 25, 2025"
+        },{
+            type:"review",
+            description:"Creating a new analytics dashboard for clients",
+            heading:"Analytics Dashboard",
+            procent:90,
+            timeToEnd:"Due Mar 30, 2025"
+        }
+    ]
+
+    let elements = ``
+    content.map((el)=>{
+        elements+=DashboardActiveProject(el);
+    })
+
+    return `
+        <div class="projects">   
+            <h1>Active Projects</h1>       
+            <div class="dashboard-active-projects">
+                ${elements}
+            </div>
+        </div>  
+    `
+}
 function Dashboard(isActive) {
     const element = `
         <div class="tab-content ${isActive ? 'active' : ''}" data-content="dashboard">
@@ -239,6 +297,7 @@ function Dashboard(isActive) {
             </div>
             ${DashboardSearchSection()}
             ${DashboardRecentTasks()}
+            ${DashboardActiveProjects()}
         </div>
     `
     return element
