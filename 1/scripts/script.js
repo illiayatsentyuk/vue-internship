@@ -26,10 +26,30 @@ function NavBar() {
         {
             imagePath: "tasks",
             content: "Tasks"
-        }]
+        },
+        {
+            imagePath:"projects",
+            content:"Projects",
+        },
+        {
+            imagePath:"tags",
+            content:"Tags"
+        },
+        {
+            imagePath:"settings",
+            content:"Settings"
+        },
+        {
+            imagePath:"profile",
+            content:"Profile"
+        }
+    ]
 
     let listItems = ``
     obj.map((el) => {
+        if (el.imagePath === "settings") {
+            listItems += `<p class="navbar-settings-section-heading">Settings</p>`
+        }
         listItems += NavBarListItem(el.imagePath, el.content)
     })
     const element = `
@@ -41,13 +61,6 @@ function NavBar() {
                 </div>
                 <ul class="navbar-list">
                     ${listItems}
-                    ${NavBarListItem("dashboard", "Dashboard")}
-                    ${NavBarListItem("tasks", "Tasks")}
-                    ${NavBarListItem("projects", "Projects")}
-                    ${NavBarListItem("tags", "Tags")}
-                    <p class="navbar-settings-section-heading">Settings</p>
-                    ${NavBarListItem("settings", "Setting")}
-                    ${NavBarListItem("profile", "Profile")}
                 </ul>
             </div>
             <div class="navbar-account-information">
@@ -77,7 +90,6 @@ function DashBoard() {
 
 function createApp(elements) {
     const app = elements.join(" ")
-    console.log(app)
     return app
 }
 
