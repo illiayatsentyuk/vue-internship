@@ -1,25 +1,25 @@
-*{
+* {
     box-sizing: border-box;
-    padding:0;
-    margin:0;
+    padding: 0;
+    margin: 0;
 }
 
-body{
+body {
     font-family: "Inter", sans-serif;
 }
 
-.navbar-list{
+.navbar-list {
     list-style-type: none;
-    padding:16px 16px 0 16px;
+    padding: 16px 16px 0 16px;
 }
 
-.navbar-list-item{
-    width:224px;
+.navbar-list-item {
+    width: 224px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap:12px;
-    padding:14px 0 14px 12px;
+    gap: 12px;
+    padding: 14px 0 14px 12px;
     font-weight: 400;
     font-style: Regular;
     font-size: 16px;
@@ -27,30 +27,36 @@ body{
     border-radius: 8px;
 }
 
-.navbar-list-item:hover{
-    cursor:pointer;
+.navbar-list-item:hover {
+    cursor: pointer;
     background: #eef2ff;
-    color:#4F46E5;
-}
-.navbar-list-item .active{
-    cursor:pointer;
-    background: #eef2ff;
-    color:#4F46E5;
+    color: #4F46E5;
 }
 
-.navbar-settings-section-heading{
-    color:#9CA3AF;
-    margin:32px 0 12px 12px;
+.navbar-list-item.active {
+    cursor: pointer;
+    background: #eef2ff;
+    color: #4F46E5;
 }
 
-.navbar-logo{
+.navbar-list-item.active>img {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(95%) saturate(1352%) hue-rotate(230deg) brightness(98%) contrast(90%);
+}
+
+.navbar-settings-section-heading {
+    color: #9CA3AF;
+    margin: 32px 0 12px 12px;
+}
+
+.navbar-logo {
     display: flex;
     align-items: center;
-    gap:12px;
-    border-bottom:1px solid #E5E7EB;
-    padding:26px 0 26px 26px;
+    gap: 12px;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 26px 0 26px 26px;
 }
-.navbar{
+
+.navbar {
     max-width: 256px;
     background: #ffffff;
     border-right: 1px solid #E5E7EB;
@@ -58,9 +64,12 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: 0px 10px 15px 0px #0000001A;
+    box-shadow: 0px 4px 6px 0px #0000001A;
+
 }
 
-.navbar-logo-heading{
+.navbar-logo-heading {
     font-weight: 700;
     font-style: Bold;
     font-size: 20px;
@@ -68,34 +77,272 @@ body{
     letter-spacing: 0%;
 }
 
-.account-logo{
+.account-logo {
     border-radius: 9999px;
     width: 40px;
     height: 40px;
 }
 
-.navbar-account-information{
-    display:flex;
+.navbar-account-information {
+    display: flex;
     flex-direction: row;
-    gap:12px;
-    padding:19px 0 19px 16px;
+    gap: 12px;
+    padding: 19px 0 19px 16px;
     align-items: center;
     border-top: 1px solid #E5E7EB;
 }
 
-.navbar-account-description > h1{
+.navbar-account-description>h1 {
     font-weight: 500;
     font-style: Medium;
     font-size: 16px;
     line-height: 16px;
     letter-spacing: 0%;
 }
-.navbar-account-description > p{
+
+.navbar-account-description>p {
     font-weight: 400;
     font-style: Regular;
     font-size: 14px;
     line-height: 14px;
     letter-spacing: 0%;
     color: #6B7280;
-    cursor:pointer
+    cursor: pointer
+}
+
+#app {
+    display: flex;
+}
+
+/*----CONTENT----*/
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.content {
+    width: 100%;
+    background: #f9fafb;
+}
+
+
+/*DASHBOARD*/
+.new-project-button {
+    background: #4F46E5;
+    color: #ffffff;
+}
+
+.dashboard-heading-controlls>button>p {
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+}
+
+.dashboard-heading-controlls>button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 16px 11px 16px;
+    border-radius: 8px;
+    border: 1px solid #4F46E5;
+}
+
+.dashboard-heading-controlls>button:hover {
+    filter: brightness(0.95);
+}
+
+.dashboard-heading-controlls>button:first-child {
+    border: 1px solid #E5E7EB;
+    background: #ffffff;
+}
+
+.dashboard-heading {
+    display: flex;
+    justify-content: space-between;
+    padding: 32px;
+}
+
+.dashboard-heading-controlls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.dashboard-heading-text>p {
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0%;
+    color: #6B7280;
+    margin-top: 5px;
+}
+
+.dashboard-heading-text>h1 {
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 24px;
+    line-height: 24px;
+}
+
+.dashboard-search-dropdown {
+    border: 1px solid #E5E7EB;
+    background: #ffffff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px;
+    gap: 12px
+}
+
+.dashboard-search-dropdowns {
+    display: flex;
+    gap: 16px;
+}
+
+.dashboard-search-input {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #E5E7EB;
+    gap: 12px;
+    background: #ffffff;
+    border-radius: 8px;
+}
+
+.dashboard-search-input>input {
+    border: none;
+    border-radius: 8px;
+    color: #ADAEBC;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.dashboard-search-input>input:focus {
+    outline: none;
+}
+
+.dasboard-serch-section {
+    padding: 0 32px 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.tasks {
+    margin-top: 35px;
+    padding: 0 32px;
+}
+
+.tasks>h1 {
+    font-weight: 600;
+    font-style: Semi Bold;
+    font-size: 18px;
+    leading-trim: NONE;
+    line-height: 18px;
+    letter-spacing: 0%;
+    margin-bottom: 20px;
+}
+
+.dashboard-recent-tasks {
+
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap:16px;
+}
+
+.recent-task {
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 8px;
+    padding: 16px 20px;
+    width: 90%;
+    box-shadow: 0px 1px 2px 0px #0000000D;
+}
+
+.recent-task-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.recent-task-heading>h1 {
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    line-height: 16px;
+}
+
+.recent-task-heading>span {
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    line-height: 100%;
+    padding: 6px 8px;
+    border: 1px solid #E5E7EB;
+    border-radius: 4px;
+}
+
+.recent-task-heading>span.urgent {
+    color: #DC2626;
+    background: #FEE2E2;
+}
+
+.recent-task-heading>span.inprogress {
+    color: #CA8A04;
+    background: #FEF9C3;
+}
+
+.recent-task.urgent {
+    border-left: 4px solid #EF4444;
+}
+
+.recent-task.inprogress {
+    border-left: 4px solid #EAB308;
+}
+
+.recent-task-time {
+    display: flex;
+    align-items: center;
+    color: #6B7280;
+    gap: 4px;
+}
+
+.recent-task-progress {
+    margin: 12px 0;
+    height: 8px;
+    width: 100%;
+    border-radius: 9999px;
+    border: 1px solid #E5E7EB;
+    overflow: hidden;
+}
+
+.recent-task-progress-bar {
+    height: 100%;
+    width: 67%;
+    transition: width 0.3s ease;
+    border-radius: 9999px;
+}
+.recent-task-progress-bar.urgent{
+    background-color: #EF4444;
+}
+.recent-task-progress-bar.inprogress{
+    background-color: #EAB308;
 }
