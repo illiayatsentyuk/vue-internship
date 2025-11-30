@@ -18,6 +18,16 @@ function NavBarListItem(imagePath, content){
 }
 
 function NavBar(){
+    const obj = {
+        firstEl: {
+            imagePath:"dashboard",
+            content:"Dashboard",
+        },
+        secondEl:{
+            imagePath:"tasks",
+            content:"Tasks"
+        }
+    }
     const element = `
         <nav class="navbar">
             <div class="navbar-controlls">
