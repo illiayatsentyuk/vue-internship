@@ -55,6 +55,9 @@ body{
     background: #ffffff;
     border-right: 1px solid #E5E7EB;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .navbar-logo-heading{
@@ -63,4 +66,36 @@ body{
     font-size: 20px;
     line-height: 20px;
     letter-spacing: 0%;
+}
+
+.account-logo{
+    border-radius: 9999px;
+    width: 40px;
+    height: 40px;
+}
+
+.navbar-account-information{
+    display:flex;
+    flex-direction: row;
+    gap:12px;
+    padding:19px 0 19px 16px;
+    align-items: center;
+    border-top: 1px solid #E5E7EB;
+}
+
+.navbar-account-description > h1{
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0%;
+}
+.navbar-account-description > p{
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    line-height: 14px;
+    letter-spacing: 0%;
+    color: #6B7280;
+    cursor:pointer
 }

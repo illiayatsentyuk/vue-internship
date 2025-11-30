@@ -19,8 +19,8 @@ function NavBarListItem(imagePath, content){
 
 function NavBar(){
     const element = `
-        <div class="navbar">
-            <div>
+        <nav class="navbar">
+            <div class="navbar-controlls">
                 <div class="navbar-logo">
                     <img src="./images/logo.png" />
                     <h1 class="navbar-logo-heading">SynTask</h1>
@@ -35,7 +35,14 @@ function NavBar(){
                     ${NavBarListItem("profile", "Profile")}
                 </ul>
             </div>
-        </div>
+            <div class="navbar-account-information">
+                <img class="navbar-account-logo" src="./images/navbar/account-logo.png" />
+                <div class="navbar-account-description">
+                    <h1>John Doe</h1>
+                    <p>john@syntask.com</p>
+                </div>
+            </div>
+        </nav>
     `
     return element
 }
