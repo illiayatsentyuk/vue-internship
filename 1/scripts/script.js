@@ -1,14 +1,14 @@
 const app = document.querySelector("#app")
 
 
-function initialMessage(message){
+function initialMessage(message) {
     const element = `
         <h1>${message}</h1>
     `
     return element
 }
 
-function NavBarListItem(imagePath, content){
+function NavBarListItem(imagePath, content) {
     return `
         <li class="navbar-list-item">
             <img src="./images/navbar/${imagePath}.svg" />
@@ -17,17 +17,21 @@ function NavBarListItem(imagePath, content){
     `
 }
 
-function NavBar(){
-    const obj = {
-        firstEl: {
-            imagePath:"dashboard",
-            content:"Dashboard",
+function NavBar() {
+    const obj = [
+        {
+            imagePath: "dashboard",
+            content: "Dashboard",
         },
-        secondEl:{
-            imagePath:"tasks",
-            content:"Tasks"
-        }
-    }
+        {
+            imagePath: "tasks",
+            content: "Tasks"
+        }]
+
+    let listItems = ``
+    obj.map((el) => {
+        listItems += NavBarListItem(el.imagePath, el.content)
+    })
     const element = `
         <nav class="navbar">
             <div class="navbar-controlls">
@@ -36,6 +40,7 @@ function NavBar(){
                     <h1 class="navbar-logo-heading">SynTask</h1>
                 </div>
                 <ul class="navbar-list">
+                    ${listItems}
                     ${NavBarListItem("dashboard", "Dashboard")}
                     ${NavBarListItem("tasks", "Tasks")}
                     ${NavBarListItem("projects", "Projects")}
@@ -57,8 +62,8 @@ function NavBar(){
     return element
 }
 
-function Tab(tabContent, isActive ){
-    const element =`
+function Tab(tabContent, isActive) {
+    const element = `
         <div>
             <h1>${tabContent}</h1>
         </div>
@@ -66,17 +71,17 @@ function Tab(tabContent, isActive ){
     return element
 }
 
-function DashBoard(){
+function DashBoard() {
 
 }
 
-function createApp(elements){
+function createApp(elements) {
     const app = elements.join(" ")
     console.log(app)
     return app
 }
 
-function bootstrap(createdApp){
+function bootstrap(createdApp) {
     console.log("Website builded!")
     app.innerHTML = createdApp
 }
