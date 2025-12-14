@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AuthView from '@/modules/auth/views/AuthView.vue'
 import dashboardRoutes from '@/modules/dashboard/routes/dashboard.routes'
+import authRoutes from '@/modules/auth/routes/auth.routes'
 const routes = [
   {
     path:"/",
@@ -13,10 +13,7 @@ const routes = [
     path:"/auth",
     component:() => import('@/layouts/AuthLayout.vue'),
     children: [
-      {
-        path: "",
-        component: AuthView
-      }
+      ...authRoutes
     ]
   },
 ]

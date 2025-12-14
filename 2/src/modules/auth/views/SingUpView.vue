@@ -1,21 +1,17 @@
 <template>
     <div class="auth-section">
-        <SignInForm v-if="mode === AuthModes.SIGNIN" @changeAuthMode="changeAuthMode"/>
-        <SignUpForm v-if="mode === AuthModes.SIGNUP" @changeAuthMode="changeAuthMode"/>
+        <SignUpForm @changeAuthMode="changeAuthMode"/>
     </div>
 </template>
 
 
 <script setup lang="ts">
-import { ref } from "vue"
-import { AuthModes } from "@/enums";
-import SignInForm from "../components/SignInForm.vue";
+import { useRouter } from "vue-router";
 import SignUpForm from "../components/SignUpForm.vue";
 
-const mode = ref<AuthModes>(AuthModes.SIGNIN)
-
+const router = useRouter();
 function changeAuthMode() {
-    mode.value = mode.value === AuthModes.SIGNIN ? AuthModes.SIGNUP : AuthModes.SIGNIN
+    router.push('/auth/signin');
 }
 </script>
 
