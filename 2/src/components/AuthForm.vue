@@ -8,16 +8,39 @@ function changeAuthMode() {
     mode.value = mode.value === AuthModes.SIGNIN ? AuthModes.SIGNUP : AuthModes.SIGNIN
 }
 
+const SIGNUP_ABOUT = [{
+    id:1,
+    text:"Advanced API Infrastructure"
+},{
+    id:2,
+    text:"User-friendly Interface"
+},{
+    id:3,
+    text:"Powerful Integrations"
+}]
 
 </script>
 
 <template>
     <div class="auth-section">
-        <div class="auth-section__information">
+        <div v-if="mode === AuthModes.SIGNIN" class="auth-section__information">
             <img src="@/assets/signin-image.png" alt="signin-image" class="auth-section__signin-image">
             <div class="auth-section__text">
                 <h1>Welcome to SynTask</h1>
                 <p>Manage your tasks and projects efficiently</p>
+            </div>
+        </div>
+        <div v-if="mode === AuthModes.SIGNUP" class="auth-section-signup__information" :style="{background:'linear-gradient(90deg, #4F46E5 0%, #3730A3 100%)'}">
+            <img src="@/assets/signup-image.png" alt="signu-image" class="auth-section__signup-image">
+            <div class="signup-description">
+                <h1>SynTask</h1>
+                <p>Smart Task and Project Management Platform</p>
+                <ul class="signup-description-ul">
+                    <li v-for="item in SIGNUP_ABOUT" :key="item.id">
+                        <img src="@/assets/galochka.svg" alt="Galochka">
+                        <p>{{ item.text }}</p>
+                    </li>
+                </ul>
             </div>
         </div>
         <div v-if="mode === AuthModes.SIGNIN" class="auth-section__form-section">
@@ -90,6 +113,71 @@ function changeAuthMode() {
 </template>
 
 <style scoped>
+.signup-description > h1{
+    font-family: Inter;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 36px;
+    leading-trim: NONE;
+    line-height: 36px;
+    letter-spacing: 0%;
+    margin-bottom:17px;
+
+}
+
+.signup-description > p{
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 18px;
+    leading-trim: NONE;
+    line-height: 18px;
+    letter-spacing: 0%;
+    margin-bottom:34px;
+
+}
+
+.signup-description-ul > li{
+    display: flex;
+    gap:12px;
+    align-items: center;
+    margin-bottom: 26px;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    leading-trim: NONE;
+    line-height: 16px;
+    letter-spacing: 0%;
+
+}
+.signup-description-ul > li:last-child{
+    margin-bottom: 0;
+}
+.auth-section-signup__information{
+    padding-left:64px;
+    display: flex;
+    position: relative;
+    width: 50%;
+    align-items: center;
+    height: 100vh;
+    justify-content: start;
+}
+.auth-section__signup-image{
+    position: absolute;
+    z-index: 10;
+    top:40%;
+    left:40%;
+}
+.signup-description-ul{
+    list-style-type: none;
+}
+.signup-description{
+    z-index:11;
+    display: flex;
+    flex-direction: column;
+    color:#fff;
+}
 .auth-signup-section__form-section>h1 {
     font-family: Inter;
     font-weight: 700;
@@ -215,7 +303,7 @@ color:#374151;
     justify-content: center;
     position: relative;
     width: 50%;
-    height: 100%;
+    height: 100vh;
 }
 
 .auth-form {
