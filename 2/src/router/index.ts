@@ -1,15 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AuthView from '@/modules/auth/views/AuthView.vue'
-import DashboardView from '@/modules/dashboard/views/DashboardView.vue'
-
+import dashboardRoutes from '@/modules/dashboard/routes/dashboard.routes'
 const routes = [
   {
     path:"/",
-    component:DashboardView
+    component:() => import('@/layouts/MainLayout.vue'),
+    children: [
+      ...dashboardRoutes
+    ]
   },
   {
     path:"/auth",
-    component:AuthView,
+    component:() => import('@/layouts/AuthLayout.vue'),
+    children: [
+      {
+        path: "",
+        component: AuthView
+      }
+    ]
   },
 ]
 

@@ -39,6 +39,8 @@ const DASHBOARD_HEADING_CONTROLLS_BUTTONS = [
 <style scoped>
 .tab-content {
     display: none;
+    width: 100%;
+    background: #f9fafb;
 }
 
 .tab-content.active {
