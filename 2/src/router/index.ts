@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AuthForm from '@/components/AuthForm.vue'
-import HomePage from '@/components/HomePage.vue'
+import AuthView from '@/modules/auth/views/AuthView.vue'
+import DashboardView from '@/modules/dashboard/views/DashboardView.vue'
 
 const routes = [
   {
     path:"/",
-    component:HomePage
+    component:DashboardView
   },
   {
     path:"/auth",
-    component:AuthForm,
+    component:AuthView,
   },
 ]
 
