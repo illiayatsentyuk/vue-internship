@@ -222,7 +222,7 @@
   align-items: center;
   padding: 71px 132px;
   width: 50%;
-  h1 {
+  .auth-section__form-title {
     font-family: Inter;
     font-weight: 700;
     font-style: Bold;
@@ -234,7 +234,7 @@
     color: #111827;
     margin-bottom: 10px;
   }
-  p {
+  .auth-section__form-subtitle {
     font-family: Inter;
     font-weight: 400;
     font-style: Regular;
