@@ -1,11 +1,11 @@
-<template>
-  <TaskSection :section="section" :task="task" />
+<template lang="pug">
+  TaskSection(:section="section" :task="task")
 </template>
 
 <script setup lang="ts">
-import TaskSection from './TaskSection.vue';
-import type { TaskComponentSection, TaskComponent } from '@/types';
-import { TaskSections } from '@/enums';
+import TaskSection from './TaskSection.vue'
+import type { TaskComponentSection, TaskComponent } from '@/types'
+import { TaskSections } from '@/enums'
 const section: TaskComponentSection = {
   section: TaskSections.HEADING,
 }
@@ -26,5 +26,4 @@ const task: TaskComponent = {
 }
 </script>
 
-<style scoped>
-</style>
+<style lang="scss" scoped></style>

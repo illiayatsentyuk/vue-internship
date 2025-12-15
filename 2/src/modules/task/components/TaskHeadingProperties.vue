@@ -1,22 +1,20 @@
-<template>
-  <div class="task-heading-properties">
-    <img :src="imagePath" />
-    <span class="task-heading-properties-text">
-      <h1>{{ heading }}</h1>
-      <span>{{ status }}</span>
-    </span>
-  </div>
+<template lang="pug">
+  .task-heading-properties
+    img(:src="imagePath")
+    span.task-heading-properties-text
+      h1 {{ heading }}
+      span {{ status }}
 </template>
 
 <script setup lang="ts">
-import type { TaskHeadingProperties } from '@/types';
+import type { TaskHeadingProperties } from '@/types'
 const props = defineProps<{
-  properties: TaskHeadingProperties;
+  properties: TaskHeadingProperties
 }>()
-const { imagePath, heading, status } = props.properties;
+const { imagePath, heading, status } = props.properties
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .task-heading-properties {
   display: flex;
   align-items: center;
@@ -29,14 +27,14 @@ const { imagePath, heading, status } = props.properties;
   gap: 4px;
 }
 
-.task-heading-properties-text>h1 {
+.task-heading-properties-text > h1 {
   font-weight: 500;
   font-style: Medium;
   font-size: 16px;
   line-height: 16px;
 }
 
-.task-heading-properties-text>span {
+.task-heading-properties-text > span {
   font-weight: 400;
   font-style: Regular;
   font-size: 14px;

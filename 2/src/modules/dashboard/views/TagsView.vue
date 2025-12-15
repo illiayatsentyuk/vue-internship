@@ -1,13 +1,11 @@
-<template>
-  <div class="tags-view">
-    <h1>Tags</h1>
-  </div>
+<template lang="pug">
+  .tags-view
+    h1 Tags
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
-<style scoped>
+<style lang="scss" scoped>
 .tags-view {
   width: 100%;
   height: 100vh;

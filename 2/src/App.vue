@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import {  RouterView } from 'vue-router';
+import { RouterView } from 'vue-router'
 </script>
 
-<template>
-    <RouterView />
+<template lang="pug">
+  RouterView
 </template>
 
-<style>
+<style lang="scss">
 body {
-    font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 </style>

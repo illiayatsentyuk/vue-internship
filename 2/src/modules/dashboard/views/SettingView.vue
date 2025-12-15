@@ -1,13 +1,11 @@
-<template>
-  <div class="settings-view">
-    <h1>Settings</h1>
-  </div>
+<template lang="pug">
+  .settings-view
+    h1 Settings
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
-<style scoped>
+<style lang="scss" scoped>
 .settings-view {
   width: 100%;
   height: 100vh;

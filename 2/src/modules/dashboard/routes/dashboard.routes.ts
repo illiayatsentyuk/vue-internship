@@ -4,7 +4,7 @@ const dashboardRoutes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'dashboard',
-    component: () => import('@/modules/dashboard/views/DashboardView.vue')
+    component: () => import('@/modules/dashboard/views/DashboardView.vue'),
   },
   {
     path: '/tasks',
@@ -14,23 +14,23 @@ const dashboardRoutes: RouteRecordRaw[] = [
   {
     path: '/projects',
     name: 'projects',
-    component: () => import('@/modules/dashboard/views/ProjectsView.vue')
+    component: () => import('@/modules/dashboard/views/ProjectsView.vue'),
   },
   {
     path: '/tags',
     name: 'tags',
-    component: () => import('@/modules/dashboard/views/TagsView.vue')
+    component: () => import('@/modules/dashboard/views/TagsView.vue'),
   },
   {
     path: '/settings',
     name: 'settings',
-    component: () => import('@/modules/dashboard/views/SettingView.vue')
+    component: () => import('@/modules/dashboard/views/SettingView.vue'),
   },
   {
     path: '/profile',
     name: 'profile',
-    component: () => import('@/modules/dashboard/views/ProfileView.vue')
-  }
+    component: () => import('@/modules/dashboard/views/ProfileView.vue'),
+  },
 ]
 
-export default dashboardRoutes;
+export default dashboardRoutes

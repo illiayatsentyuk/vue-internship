@@ -1,105 +1,97 @@
-<template>
-  <div class="recent-task" :class="importance === 'urgent' ? 'urgent' : 'inprogress'">
-    <div class="recent-task-heading">
-      <h1>{{ heading }}</h1>
-      <span :class="importance === 'urgent' ? 'urgent' : 'inprogress'">{{ importance==='urgent' ? 'Urgent' : 'In Progress' }}</span>
-    </div>
-    <div class="recent-task-progress">
-      <div class="recent-task-progress-bar" :class="importance === 'urgent' ? 'urgent' : 'inprogress'"></div>
-    </div>
-    <div class="recent-task-time">
-      <img src="@/assets/dashboard/timer-icon.svg" />
-      <p>{{ timeToEnd }}</p>
-    </div>
-  </div>
+<template lang="pug">
+  .recent-task(:class="importance === 'urgent' ? 'urgent' : 'inprogress'")
+    .recent-task-heading
+      h1 {{ heading }}
+      span(:class="importance === 'urgent' ? 'urgent' : 'inprogress'") {{ importance==='urgent' ? 'Urgent' : 'In Progress' }}
+    .recent-task-progress
+      .recent-task-progress-bar(:class="importance === 'urgent' ? 'urgent' : 'inprogress'")
+    .recent-task-time
+      img(src="@/assets/dashboard/timer-icon.svg" alt="timer-icon")
+      p {{ timeToEnd }}
 </template>
 <script setup lang="ts">
-import type { Task } from '@/types';
+import type { Task } from '@/types'
 const props = defineProps<{
-  task: Task;
+  task: Task
 }>()
-const {importance, heading, timeToEnd} = props.task;
+const { importance, heading, timeToEnd } = props.task
 </script>
 
-<style scoped>
-.recent-task {
-background: #FFFFFF;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-border-radius: 8px;
-padding: 16px 20px;
-width: 90%;
-box-shadow: 0px 1px 2px 0px #0000000D;
-}
+<style lang="scss" scoped>
+
 
 .recent-task-heading {
-display: flex;
-justify-content: space-between;
-align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h1 {
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    line-height: 16px;
+  }
+  span {
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    line-height: 100%;
+    padding: 6px 8px;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    &.urgent {
+      color: #dc2626;
+      background: #fee2e2;
+    }
+    &.inprogress {
+      color: #ca8a04;
+      background: #fef9c3;
+    }
+  }
 }
 
-.recent-task-heading>h1 {
-font-weight: 500;
-font-style: Medium;
-font-size: 16px;
-line-height: 16px;
-}
-
-.recent-task-heading>span {
-font-weight: 400;
-font-style: Regular;
-font-size: 14px;
-line-height: 100%;
-padding: 6px 8px;
-border: 1px solid #E5E7EB;
-border-radius: 4px;
-}
-
-.recent-task-heading>span.urgent {
-color: #DC2626;
-background: #FEE2E2;
-}
-
-.recent-task-heading>span.inprogress {
-color: #CA8A04;
-background: #FEF9C3;
-}
-
-.recent-task.urgent {
-border-left: 4px solid #EF4444;
-}
-
-.recent-task.inprogress {
-border-left: 4px solid #EAB308;
+.recent-task {
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  padding: 16px 20px;
+  width: 90%;
+  box-shadow: 0px 1px 2px 0px #0000000d;
+  &.urgent {
+    border-left: 4px solid #ef4444;
+  }
+  &.inprogress {
+    border-left: 4px solid #eab308;
+  }
 }
 
 .recent-task-time {
-display: flex;
-align-items: center;
-color: #6B7280;
-gap: 4px;
+  display: flex;
+  align-items: center;
+  color: #6b7280;
+  gap: 4px;
 }
 
 .recent-task-progress {
-margin: 12px 0;
-height: 8px;
-width: 100%;
-border-radius: 9999px;
-border: 1px solid #E5E7EB;
-overflow: hidden;
+  margin: 12px 0;
+  height: 8px;
+  width: 100%;
+  border-radius: 9999px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
 }
 
 .recent-task-progress-bar {
-height: 100%;
-width: 67%;
-transition: width 0.3s ease;
-border-radius: 9999px;
-}
-.recent-task-progress-bar.urgent{
-background-color: #EF4444;
-}
-.recent-task-progress-bar.inprogress{
-background-color: #EAB308;
+  height: 100%;
+  width: 67%;
+  transition: width 0.3s ease;
+  border-radius: 9999px;
+  &.urgent {
+    background-color: #ef4444;
+  }
+  &.inprogress {
+    background-color: #eab308;
+  }
 }
 </style>

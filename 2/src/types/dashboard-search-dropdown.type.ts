@@ -1,3 +1,3 @@
 export type DashboardSearcgDropdown = {
-  content: string;
+  content: string
 }

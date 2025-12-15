@@ -1,2 +1,2 @@
-export * from "./auth-modes.enum"
-export * from "./task-sections.enum"
+export * from './auth-modes.enum'
+export * from './task-sections.enum'

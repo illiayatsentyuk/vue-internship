@@ -1,13 +1,13 @@
-<template>
-  <button>
-    <img :src="imagePath" />
-    <p>{{ content }}</p>
-  </button>
+<template lang="pug">
+  button
+    img(:src="imagePath")
+    p {{ content }}
 </template>
 <script setup lang="ts">
-import type { DashboardHeadingControllsButtons } from '@/types';
+import type { DashboardHeadingControllsButtons } from '@/types'
 const props = defineProps<{
-  button: DashboardHeadingControllsButtons;
+  button: DashboardHeadingControllsButtons
 }>()
-const {imagePath, content} = props.button;
+const { imagePath, content } = props.button
 </script>
+<style lang="scss" scoped></style>

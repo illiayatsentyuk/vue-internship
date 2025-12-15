@@ -1,5 +1,5 @@
 export type Task = {
-  importance: string;
-  heading: string;
-  timeToEnd: string;
+  importance: string
+  heading: string
+  timeToEnd: string
 }

@@ -1,13 +1,11 @@
-<template>
-  <div class="projects-view">
-    <h1>Projects</h1>
-  </div>
+<template lang="pug">
+  .projects-view
+    h1 Projects
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
-<style scoped>
+<style lang="scss" scoped>
 .projects-view {
   width: 100%;
   height: 100vh;

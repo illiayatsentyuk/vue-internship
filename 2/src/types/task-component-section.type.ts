@@ -1,5 +1,5 @@
-import type { TaskSections } from "@/enums";
+import type { TaskSections } from '@/enums'
 
 export type TaskComponentSection = {
-  section: TaskSections;
+  section: TaskSections
 }

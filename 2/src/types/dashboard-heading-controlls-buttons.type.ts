@@ -1,4 +1,4 @@
 export type DashboardHeadingControllsButtons = {
-  imagePath: string;
-  content: string;
+  imagePath: string
+  content: string
 }

@@ -1,13 +1,11 @@
-<template>
-  <div class="profile-view">
-    <h1>Profile</h1>
-  </div>
+<template lang="pug">
+  .profile-view
+    h1 Profile
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
-<style scoped>
+<style lang="scss" scoped>
 .profile-view {
   width: 100%;
   height: 100vh;
