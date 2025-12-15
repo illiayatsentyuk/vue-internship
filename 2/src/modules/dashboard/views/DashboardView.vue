@@ -74,19 +74,19 @@ const DASHBOARD_HEADING_CONTROLLS_BUTTONS = [
     border-radius: 8px;
     border: 1px solid #4f46e5;
     &:hover {
-        filter: brightness(0.95);
+      filter: brightness(0.95);
     }
     &:first-child {
-        border: 1px solid #e5e7eb;
-        background: #ffffff;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
     }
     p {
-        font-weight: 400;
-        font-style: Regular;
-        font-size: 16px;
-        line-height: 100%;
-        letter-spacing: 0%;
-        text-align: center;
+      font-weight: 400;
+      font-style: Regular;
+      font-size: 16px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      text-align: center;
     }
   }
 }

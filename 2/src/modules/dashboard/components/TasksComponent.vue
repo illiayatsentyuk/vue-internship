@@ -1,18 +1,18 @@
 <template lang="pug">
-  .recent-task(:class="importance === 'urgent' ? 'urgent' : 'inprogress'")
-    .recent-task-heading
-      h1 {{ heading }}
-      span(:class="importance === 'urgent' ? 'urgent' : 'inprogress'") {{ importance==='urgent' ? 'Urgent' : 'In Progress' }}
-    .recent-task-progress
-      .recent-task-progress-bar(:class="importance === 'urgent' ? 'urgent' : 'inprogress'")
-    .recent-task-time
-      img(src="@/assets/dashboard/timer-icon.svg" alt="timer-icon")
-      p {{ timeToEnd }}
-</template>
+    .recent-task(:class="importance === 'urgent' ? 'urgent' : 'inprogress'")
+      .recent-task-heading
+        h1 {{ heading }}
+        span(:class="importance === 'urgent' ? 'urgent' : 'inprogress'") {{ importance==='urgent' ? 'Urgent' : 'In Progress' }}
+      .recent-task-progress
+        .recent-task-progress-bar(:class="importance === 'urgent' ? 'urgent' : 'inprogress'")
+      .recent-task-time
+        img(src="@/assets/dashboard/timer-icon.svg" alt="timer-icon")
+        p {{ timeToEnd }}
+  </template>
 <script setup lang="ts">
-import type { Task } from '@/types'
+import type { TaskComponent as TaskComponentType } from '@/types'
 const props = defineProps<{
-  task: Task
+  task: TaskComponentType
 }>()
 const { importance, heading, timeToEnd } = props.task
 </script>

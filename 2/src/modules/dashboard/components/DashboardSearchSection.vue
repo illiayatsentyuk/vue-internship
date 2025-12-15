@@ -56,7 +56,6 @@ const dropdownContent = [
   }
 }
 
-
 .dashboard-search-dropdowns {
   display: flex;
   gap: 16px;

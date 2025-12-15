@@ -119,7 +119,10 @@ const navBarSettingsItems = [
 }
 
 .navbar {
-  max-width: 256px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 256px;
   background: #ffffff;
   border-right: 1px solid #e5e7eb;
   height: 100vh;
@@ -172,5 +175,6 @@ const navBarSettingsItems = [
 }
 .main-layout {
   display: flex;
+  margin-left: 256px;
 }
 </style>

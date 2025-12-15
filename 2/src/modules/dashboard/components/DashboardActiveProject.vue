@@ -74,7 +74,6 @@ const { type, description, heading, procent, timeToEnd } = props.activeProject
   }
 }
 
-
 .active-project-description {
   font-weight: 400;
   font-style: Regular;
@@ -121,7 +120,6 @@ const { type, description, heading, procent, timeToEnd } = props.activeProject
     transition: width 0.3s ease;
   }
 }
-
 
 .active-project-ending {
   width: 100%;
