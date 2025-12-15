@@ -1,6 +1,6 @@
 <template lang="pug">
   .task-view
-    TaskComponent(:task="task")
+    TaskComponent(:task="task" @addComment="handleAddComment")
 </template>
 
 <script setup lang="ts">
@@ -13,6 +13,11 @@ const router = useRouter()
 const task = tasksStore.getTaskById(Number(route.params.id))
 if (!task) {
   router.push('/tasks')
+}
+
+const handleAddComment = (comment: string, id: number) => {
+  tasksStore.addCommentToTask(id, comment)
+  console.log(tasksStore.tasks)
 }
 </script>
 

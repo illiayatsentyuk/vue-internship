@@ -44,8 +44,8 @@
     section.task-component-comments
         h2 Comments
         .task-component-comments-input
-            input(type="text" placeholder="Add a comment")
-            button Add Comment
+            input(type="text" placeholder="Add a comment" v-model="comment")
+            button(@click="handleAddComment") Add Comment
         .task-component-comments-list
             .task-component-comments-list-item(v-for="comment in comments" :key="comment")
                 img(src="@/assets/task/comment-icon.svg" alt="comment-icon")
@@ -53,11 +53,18 @@
 </template>
 <script setup lang="ts">
 import type { TaskComponent as TaskComponentType } from '@/types'
+import { ref } from 'vue'
 const props = defineProps<{
   task: TaskComponentType
+  addComment: (comment: string, id: number) => void
 }>()
-const { heading, importance, timeToEnd, assignedTo, status, description, attachments, comments } =
-  props.task
+const emit = defineEmits(['addComment'])
+const { heading, importance, timeToEnd, assignedTo, status, description, attachments, comments, id } = props.task
+const comment = ref('')
+const handleAddComment = () => {
+  emit('addComment', comment.value, id)
+  comment.value = ''
+}
 </script>
 <style lang="scss" scoped>
 .task-component-comments {

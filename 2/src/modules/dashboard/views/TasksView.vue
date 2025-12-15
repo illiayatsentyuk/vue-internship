@@ -1,5 +1,6 @@
 <template lang="pug">
   .tasks-view
+    h1 Tasks
     RouterLink(v-for="task in tasks" :key="task.id" :to="`/tasks/${task.id}`" class="task-link")
       TasksComponent(:task="task")
 </template>

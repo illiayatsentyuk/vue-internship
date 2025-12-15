@@ -23,11 +23,13 @@ const DASHBOARD_HEADING_CONTROLLS_BUTTONS = [
     id: 1,
     imagePath: addNewTaskIcon,
     content: 'New Task',
+    to: '/tasks/create',
   },
   {
     id: 2,
     imagePath: addNewProjectIcon,
     content: 'New Project',
+    to: '/projects/create',
   },
 ]
 </script>

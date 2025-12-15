@@ -36,18 +36,31 @@ export const useTasksStore = defineStore('tasks', () => {
     },
   ])
   function editTask(task: TaskComponent, id: number) {
-    tasks.value = tasks.value.map((t) => (t.id === id ? task : t))
+    tasks.value = tasks.value.map((element) => (element.id === id ? task : element))
   }
   function deleteTask(id: number) {
-    tasks.value = tasks.value.filter((t) => t.id !== id)
+    tasks.value = tasks.value.filter((element) => element.id !== id)
   }
   function addTask(task: TaskComponent) {
     tasks.value.push(task)
   }
 
   const getTaskById = (id: number) => {
-    return tasks.value.find((t) => t.id === id)
+    return tasks.value.find((element) => element.id === id)
   }
 
-  return { tasks, editTask, deleteTask, addTask, getTaskById }
+  const addCommentToTask = (taskId: number, content:string) => {
+    return tasks.value.map((element) => {
+      if (element.id === taskId) {
+        element.comments.push(content)
+      }
+      return element
+    })
+  }
+
+  const returnBiggestId = computed(() => {
+    return tasks.value.reduce((max, task) => Math.max(max, task.id), 0)
+  })
+
+  return { tasks, editTask, deleteTask, addTask, getTaskById, addCommentToTask, returnBiggestId }
 })
