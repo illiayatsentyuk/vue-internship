@@ -1,5 +1,5 @@
 import type { Tag } from "./tag.type"
-
+import type { Project } from "./project.type"
 export type TaskComponent = {
   id: number
   heading: string
@@ -8,7 +8,7 @@ export type TaskComponent = {
   importance: string
   status: string
   tags: Tag[]
-  project: string
+  project: Project
   assignedTo: string
   createdAt: string
   updatedAt: string
