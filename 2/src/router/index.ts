@@ -2,11 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import dashboardRoutes from '@/modules/dashboard/routes/dashboard.routes'
 import authRoutes from '@/modules/auth/routes/auth.routes'
 import taskRoutes from '@/modules/task/routes/task.routes'
+import projectRoutes from '@/modules/project/routes/project.route'
 const routes = [
   {
     path: '/',
     component: () => import('@/layouts/MainLayout.vue'),
-    children: [...dashboardRoutes, ...taskRoutes],
+    children: [...dashboardRoutes, ...taskRoutes, ...projectRoutes],
   },
   {
     path: '/auth',

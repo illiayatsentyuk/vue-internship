@@ -23,7 +23,7 @@ const handleAddComment = (comment: string, id: number) => {
 <style lang="scss" scoped>
 .task-view {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   padding: 32px 96px;
   background: #F9FAFB;
 }

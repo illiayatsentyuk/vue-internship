@@ -1,5 +1,5 @@
-import type { Tag } from "./tag.type"
-import type { Project } from "./project.type"
+import type { Tag } from '@/types'
+import type { Project } from '@/types'
 export type TaskComponent = {
   id: number
   heading: string

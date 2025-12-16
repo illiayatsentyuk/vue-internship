@@ -8,7 +8,7 @@
       .recent-task-time
         img(src="@/assets/dashboard/timer-icon.svg" alt="timer-icon")
         p {{ timeToEnd }}
-  </template>
+</template>
 <script setup lang="ts">
 import type { TaskComponent as TaskComponentType } from '@/types'
 const props = defineProps<{

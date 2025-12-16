@@ -1,4 +1,4 @@
-import type { TaskComponent } from "./task-component.type"
+import type { TaskComponent } from '@/types'
 
 export type Project = {
   id: number

@@ -45,8 +45,11 @@
     section.task-component-comments
         h2 Comments
         .task-component-comments-input
-            input(type="text" placeholder="Add a comment" v-model="comment")
-            button(@click="handleAddComment") Add Comment
+            form(@submit.prevent="handleAddComment" )
+                .task-component-comments-input-wrapper
+                    input(type="text" placeholder="Add a comment" v-model="form.comment" :class="{ 'error': v$.comment.$error }")
+                    span.error-message(v-if="v$.comment.$error") {{ v$.comment.$errors[0].$message }}
+                button(type="submit") Add Comment
         .task-component-comments-list
             .task-component-comments-list-item(v-for="comment in comments" :key="comment")
                 img(src="@/assets/task/comment-icon.svg" alt="comment-icon")
@@ -54,8 +57,21 @@
 </template>
 <script setup lang="ts">
 import type { TaskComponent as TaskComponentType } from '@/types'
-import { ref } from 'vue'
+import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+
+const rules = {
+  comment: { required },
+}
+
+const form = reactive({
+  comment: '',
+})
+
+const v$ = useVuelidate(rules, form)
+
 const props = defineProps<{
   task: TaskComponentType
   addComment: (comment: string, id: number) => void
@@ -63,10 +79,15 @@ const props = defineProps<{
 const emit = defineEmits(['addComment'])
 const { heading, importance, timeToEnd, assignedTo, status, description, attachments, comments, id } = props.task
 const router = useRouter()
-const comment = ref('')
-const handleAddComment = () => {
-  emit('addComment', comment.value, id)
-  comment.value = ''
+
+const handleAddComment = async () => {
+  const isFormValid = await v$.value.$validate()
+  if (!isFormValid) {
+    return
+  }
+  emit('addComment', form.comment, id)
+  form.comment = ''
+  v$.value.$reset()
 }
 const handleEditTask = () => {
   router.push(`/tasks/${id}/edit`)
@@ -89,6 +110,18 @@ const handleEditTask = () => {
         flex-direction: column;
         align-items: flex-start;
         gap: 16px;
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .task-component-comments-input-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
         input {
             width: 100%;
             padding: 16px;
@@ -98,6 +131,25 @@ const handleEditTask = () => {
             font-weight: 400;
             font-style: Regular;
             font-size: 16px;
+            transition: border-color 0.2s ease;
+            &:focus {
+                outline: none;
+                border-color: #4f46e5;
+            }
+            &.error {
+                border-color: #ef4444;
+                &:focus {
+                    border-color: #ef4444;
+                }
+            }
+        }
+        .error-message {
+            font-family: Inter;
+            font-weight: 400;
+            font-style: Regular;
+            font-size: 14px;
+            color: #ef4444;
+            margin-top: 4px;
         }
         button {
             background: #4f46e5;
@@ -106,10 +158,19 @@ const handleEditTask = () => {
             font-weight: 500;
             font-style: Medium;
             font-size: 14px;
-            border:1px solid #E5E7EB;
-            padding:10px 16px;
+            border: 1px solid #E5E7EB;
+            padding: 10px 16px;
             border-radius: 8px;
             margin-bottom: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            &:hover {
+                background: #4338ca;
+            }
+            &:disabled {
+                background: #9ca3af;
+                cursor: not-allowed;
+            }
         }
     }
     .task-component-comments-list {
