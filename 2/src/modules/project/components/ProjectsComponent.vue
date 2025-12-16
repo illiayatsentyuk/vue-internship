@@ -1,0 +1,90 @@
+<template lang="pug">
+    .project
+      .project-heading
+        h1 {{ heading }}
+        span {{ description }}
+</template>
+<script setup lang="ts">
+import type { Project as ProjectType } from '@/types'
+const props = defineProps<{
+  project: ProjectType
+}>()
+const { heading, description } = props.project
+</script>
+
+<style lang="scss" scoped>
+.project-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h1 {
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    line-height: 16px;
+  }
+  span {
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    line-height: 100%;
+    padding: 6px 8px;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    &.urgent {
+      color: #dc2626;
+      background: #fee2e2;
+    }
+    &.inprogress {
+      color: #ca8a04;
+      background: #fef9c3;
+    }
+  }
+}
+
+.project {
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  padding: 16px 20px;
+  width: 90%;
+  box-shadow: 0px 1px 2px 0px #0000000d;
+  &.urgent {
+    border-left: 4px solid #ef4444;
+  }
+  &.inprogress {
+    border-left: 4px solid #eab308;
+  }
+}
+
+.project-time {
+  display: flex;
+  align-items: center;
+  color: #6b7280;
+  gap: 4px;
+}
+
+.project-progress {
+  margin: 12px 0;
+  height: 8px;
+  width: 100%;
+  border-radius: 9999px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+.project-progress-bar {
+  height: 100%;
+  width: 67%;
+  transition: width 0.3s ease;
+  border-radius: 9999px;
+  &.urgent {
+    background-color: #ef4444;
+  }
+  &.inprogress {
+    background-color: #eab308;
+  }
+}
+</style>

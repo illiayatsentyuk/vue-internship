@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import TasksComponent from '../../dashboard/components/TasksComponent.vue'
+import TasksComponent from '../components/TasksComponent.vue'
 import { RouterLink } from 'vue-router'
 import { useTasksStore } from '@/stores/tasks.store'
 import { useRouter } from 'vue-router'

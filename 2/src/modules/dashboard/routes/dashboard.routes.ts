@@ -9,12 +9,12 @@ const dashboardRoutes: RouteRecordRaw[] = [
   {
     path: '/tasks',
     name: 'tasks',
-    component: () => import('@/modules/dashboard/views/TasksView.vue'),
+    component: () => import('@/modules/task/views/TasksView.vue'),
   },
   {
     path: '/projects',
     name: 'projects',
-    component: () => import('@/modules/dashboard/views/ProjectsView.vue'),
+    component: () => import('@/modules/project/views/ProjectsView.vue'),
   },
   {
     path: '/tags',
