@@ -1,6 +1,6 @@
 <template lang="pug">
     .create-task-form
-        form(@submit.prevent="handleCreateTask")
+        form(@submit.prevent="handleEditTask")
             .form-group
                 label(for="title") Title
                 input(type="text" id="title" v-model="form.heading")
@@ -23,35 +23,38 @@
             .form-group
                 label(for="timeToEnd") Time to End
                 input(type="time" id="timeToEnd" v-model="form.timeToEnd")
-            button(type="submit") Create
+            button(type="submit") Edit
 
 </template>
 
 <script setup lang="ts">     
 import { reactive } from 'vue'
-import type { CreateTaskForm } from '@/types'
+import type { CreateTaskForm, TaskComponent } from '@/types'
 import { useTagsStore } from '@/stores/tags.store'
-const emit = defineEmits(['createTask'])
-
+const props = defineProps<{
+    task: TaskComponent
+}>()
+const emit = defineEmits(['editTask'])
+const task = props.task
 const tagsStore = useTagsStore()
 const availableTags = tagsStore.tags
 
 const form = reactive<CreateTaskForm>({
-    heading: '',
-    description: '',
-    timeToEnd: '',
-    importance: '123',
-    status: '123',
-    tags: [],
-    project: '123',
-    assignedTo: '',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    attachments: ['Penos1 1', 'Attachment 2'],
-    comments: [],
+    heading: task.heading,
+    description: task.description,
+    timeToEnd: task.timeToEnd,
+    importance: task.importance,
+    status: task.status,
+    tags: task.tags,
+    project: task.project,
+    assignedTo: task.assignedTo,
+    createdAt: task.createdAt,
+    updatedAt: task.updatedAt,
+    attachments: task.attachments,
+    comments: task.comments,
 })
-const handleCreateTask = () => {
-    emit('createTask', form)
+const handleEditTask = () => {
+    emit('editTask', form)
 }
 </script>
 

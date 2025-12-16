@@ -4,6 +4,7 @@
         .task-component-heading-title
             h1 {{ heading }}
             span {{ importance }}
+            button(@click="handleEditTask") Edit
         .task-component-heading-description
             .task-component-heading-description-deadline 
                 img(src="@/assets/task/deadline-icon.svg" alt="deadline-icon")
@@ -54,16 +55,21 @@
 <script setup lang="ts">
 import type { TaskComponent as TaskComponentType } from '@/types'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 const props = defineProps<{
   task: TaskComponentType
   addComment: (comment: string, id: number) => void
 }>()
 const emit = defineEmits(['addComment'])
 const { heading, importance, timeToEnd, assignedTo, status, description, attachments, comments, id } = props.task
+const router = useRouter()
 const comment = ref('')
 const handleAddComment = () => {
   emit('addComment', comment.value, id)
   comment.value = ''
+}
+const handleEditTask = () => {
+  router.push(`/tasks/${id}/edit`)
 }
 </script>
 <style lang="scss" scoped>
@@ -297,6 +303,21 @@ const handleAddComment = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  button {
+    padding: 15px 42px;
+    border-radius: 8px;
+    background: #4f46e5;
+    color: #ffffff;
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 14px;
+    border:1px solid #E5E7EB;
+  }
+  button:hover {
+    background: #4338ca;
+    cursor: pointer;
+  }
   h1 {
     font-family: Inter;
     font-weight: 700;

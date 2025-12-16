@@ -12,9 +12,8 @@ import type { TaskComponent } from '@/types'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const tasksStore = useTasksStore()
-const biggestId = tasksStore.returnBiggestId
 const handleCreateTask = (task: TaskComponent) => {
-    tasksStore.addTask({ ...task, id: biggestId + 1 })
+    tasksStore.addTask(task)
     router.push('/tasks')
 }
 </script>

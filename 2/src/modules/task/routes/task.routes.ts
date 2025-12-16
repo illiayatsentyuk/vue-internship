@@ -11,6 +11,11 @@ const taskRoutes: RouteRecordRaw[] = [
     name: 'create-task',
     component: () => import('@/modules/task/views/CreateTaskView.vue'),
   },
+  {
+    path: '/tasks/:id/edit',
+    name: 'edit-task',
+    component: () => import('@/modules/task/views/EditTaskView.vue'),
+  },
 ]
 
 export default taskRoutes

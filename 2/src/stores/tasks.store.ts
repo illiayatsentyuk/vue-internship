@@ -11,7 +11,13 @@ export const useTasksStore = defineStore('tasks', () => {
       timeToEnd: '10:00',
       importance: 'High',
       status: 'Pending',
-      tags: ['Tag 1', 'Tag 2'],
+      tags: [
+        {
+          id: 1,
+          name: 'Tag 1',
+          color: '#FF0000',
+        },
+      ],
       project: 'Project 1',
       assignedTo: 'User 1',
       createdAt: '2021-01-01',
@@ -26,7 +32,13 @@ export const useTasksStore = defineStore('tasks', () => {
       timeToEnd: '10:00',
       importance: 'High',
       status: 'Pending',
-      tags: ['Tag 1', 'Tag 2'],
+      tags: [
+        {
+          id: 1,
+          name: 'Tag 1',
+          color: '#FF0000',
+        },
+      ],
       project: 'Project 1',
       assignedTo: 'User 1',
       createdAt: '2021-01-01',
@@ -35,14 +47,14 @@ export const useTasksStore = defineStore('tasks', () => {
       comments: ['Comment 1', 'Comment 2'],
     },
   ])
-  function editTask(task: TaskComponent, id: number) {
-    tasks.value = tasks.value.map((element) => (element.id === id ? task : element))
+  function editTask(task: Omit<TaskComponent, 'id'>, id: number) {
+    tasks.value = tasks.value.map((element) => (element.id === id ? { ...task, id } : element))
   }
   function deleteTask(id: number) {
     tasks.value = tasks.value.filter((element) => element.id !== id)
   }
-  function addTask(task: TaskComponent) {
-    tasks.value.push(task)
+  function addTask(task: Omit<TaskComponent, 'id'>) {
+    tasks.value.push({ ...task, id: returnBiggestId.value + 1 })
   }
 
   const getTaskById = (id: number) => {

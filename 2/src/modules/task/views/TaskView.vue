@@ -17,7 +17,6 @@ if (!task) {
 
 const handleAddComment = (comment: string, id: number) => {
   tasksStore.addCommentToTask(id, comment)
-  console.log(tasksStore.tasks)
 }
 </script>
 
