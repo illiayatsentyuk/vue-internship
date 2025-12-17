@@ -28,14 +28,22 @@
                     | {{ v$.description.required ? 'Description is required.' : '' }}
                     | {{ v$.description.minLength?.$invalid ? ' Minimum 3 characters.' : '' }}
                     | {{ v$.description.maxLength?.$invalid ? ' Maximum 1000 characters.' : '' }}
+            .form-group.user-select-group
+                label(for="contributors") Contributors
+                select#contributors.user-select(multiple)
+                    option(disabled selected) Select contributors…
+                    option(v-for="user in availableUsers" :value="user.id" :key="user.id") {{ user.name }}
             button(type="submit") Create
 </template>
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, minLength, maxLength } from '@vuelidate/validators'
+import { useUsersStore } from '@/stores/users.store'
 import type { CreateProjectForm } from '@/types'
 const emit = defineEmits(['createProject'])
+const usersStore = useUsersStore()
+const availableUsers = usersStore.users
 
 const form = reactive<CreateProjectForm>({
     heading: '',
@@ -43,6 +51,7 @@ const form = reactive<CreateProjectForm>({
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     tasks: [],
+    contributors: [],
 })
 
 const rules = {
@@ -135,6 +144,31 @@ const handleCreateProject = async () => {
     font-weight: 500;
     margin-top: 2px;
     line-height: 1.45;
+  }
+}
+
+.user-select-group {
+  .user-select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    font-size: 14px;
+    color: #111827;
+    min-height: 90px;
+    cursor: pointer;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease,
+      background-color 0.15s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 1px #6366f1;
+      background: #fff;
+    }
   }
 }
 

@@ -1,5 +1,4 @@
-import type { Tag } from '@/types'
-import type { Project } from '@/types'
+import type { Tag, User, Project } from '@/types'
 export type TaskComponent = {
   id: number
   heading: string
@@ -9,7 +8,7 @@ export type TaskComponent = {
   status: string
   tags: Tag[]
   project: Project
-  assignedTo: string
+  assignedTo: User[] | null
   createdAt: string
   updatedAt: string
   attachments: string[]

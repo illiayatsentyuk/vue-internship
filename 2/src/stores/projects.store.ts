@@ -1,12 +1,19 @@
 import { defineStore } from 'pinia'
+import { useUsersStore } from '@/stores/users.store'
 import type { Project } from '@/types'
 import { computed, ref } from 'vue'
 export const useProjectsStore = defineStore('projects', () => {
+  const usersStore = useUsersStore()
+  const availableUsers = usersStore.getUserById(1)
+  if (!availableUsers) {
+    throw new Error('User not found')
+  }
   const projects = ref<Project[]>([
     {
       id: 1,
       heading: 'Project 1',
       description: 'Description 1',
+      contributors: [availableUsers],
       createdAt: '2021-01-01',
       updatedAt: '2021-01-01',
       tasks: [],

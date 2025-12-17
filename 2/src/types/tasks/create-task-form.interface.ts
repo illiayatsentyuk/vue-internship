@@ -1,5 +1,4 @@
-import type { Tag } from '@/types'
-import type { Project } from '@/types'
+import type { Tag, User, Project } from '@/types'
 export interface CreateTaskForm {
   heading: string
   description: string
@@ -8,7 +7,7 @@ export interface CreateTaskForm {
   status: string
   tags: Tag[]
   project: Project | null
-  assignedTo: string
+  assignedTo: User[] | null
   createdAt: string
   updatedAt: string
   attachments: string[]

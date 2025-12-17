@@ -16,5 +16,9 @@ console.log(projects)
 .projects-view {
   width: 100%;
   height: 100vh;
+  padding:0 32px;
+  h1 {
+    margin-bottom:20px;
+  }
 }
 </style>
