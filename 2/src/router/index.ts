@@ -3,11 +3,12 @@ import dashboardRoutes from '@/modules/dashboard/routes/dashboard.routes'
 import authRoutes from '@/modules/auth/routes/auth.routes'
 import taskRoutes from '@/modules/task/routes/task.routes'
 import projectRoutes from '@/modules/project/routes/project.route'
+import tagRoutes from '@/modules/tag/routes/tag.routes'
 const routes = [
   {
     path: '/',
     component: () => import('@/layouts/MainLayout.vue'),
-    children: [...dashboardRoutes, ...taskRoutes, ...projectRoutes],
+    children: [...dashboardRoutes, ...taskRoutes, ...projectRoutes, ...tagRoutes],
   },
   {
     path: '/auth',

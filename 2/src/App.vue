@@ -17,4 +17,7 @@ body {
   padding: 0;
   margin: 0;
 }
+p{
+  margin-bottom: 0 !important;
+}
 </style>

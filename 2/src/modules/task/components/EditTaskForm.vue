@@ -28,6 +28,21 @@
                   | {{ v$.description.required ? 'Description is required.' : '' }}
                   | {{ v$.description.minLength?.$invalid ? ' Minimum 3 characters.' : '' }}
                   | {{ v$.description.maxLength?.$invalid ? ' Maximum 1000 characters.' : '' }}
+          .form-group(:class="{ 'has-error': v$.importance.$error }")
+              label(for="importance") Importance
+              select(
+                  id="importance"
+                  v-model="form.importance"
+                  :class="{ 'input-error': v$.importance.$error }"
+                  @blur="v$.importance.$touch"
+              )
+                  option(value="" disabled selected) Select importance
+                  option(value="low") Low
+                  option(value="medium") Medium
+                  option(value="high") High
+                  option(value="critical") Critical
+              span.error-message(v-if="v$.importance.$error")
+                  | Importance is required.
           .form-group(:class="{ 'has-error': v$.tags.$error }")
               label Tags
               .tags-selector
@@ -37,12 +52,12 @@
                   )
                       input(
                           type="checkbox"
-                          :id="tag.id"
-                          :value="tag.id"
+                          :id="`tag-${tag.id}`"
+                          :value="tag"
                           v-model="form.tags"
                           @change="v$.tags.$touch"
                       )
-                      label(:for="tag.id") {{ tag.name }}
+                      label(:for="`tag-${tag.id}`") {{ tag.name }}
                       span.tag-color-circle(:style="{ backgroundColor: tag.color }")
               span.error-message(v-if="v$.tags.$error")
                   | Tags are required.
@@ -66,16 +81,16 @@
               label(for="assignedTo") Assigned To
               input(type="text" id="assignedTo" v-model="form.assignedTo" placeholder="Who is assigned?")
           .form-group(:class="{ 'has-error': v$.timeToEnd.$error }")
-              label(for="timeToEnd") Time to End
+              label(for="timeToEnd") Deadline
               input(
-                  type="time"
+                  type="date"
                   id="timeToEnd"
                   v-model="form.timeToEnd"
                   :class="{ 'input-error': v$.timeToEnd.$error }"
                   @blur="v$.timeToEnd.$touch"
               )
               span.error-message(v-if="v$.timeToEnd.$error")
-                  | Time to end is required.
+                  | Deadline is required.
           button(type="submit") Edit
 
 </template>

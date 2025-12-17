@@ -19,7 +19,7 @@ const dashboardRoutes: RouteRecordRaw[] = [
   {
     path: '/tags',
     name: 'tags',
-    component: () => import('@/modules/dashboard/views/TagsView.vue'),
+    component: () => import('@/modules/tag/views/TagsView.vue'),
   },
   {
     path: '/settings',

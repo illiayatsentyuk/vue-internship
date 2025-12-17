@@ -12,7 +12,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const projectsStore = useProjectsStore()
 const handleCreateProject = (project: CreateProjectFormType) => {
-    projectsStore.addProject(project)
+    projectsStore.addProject({ ...project, contributors: project.contributors || [] })
     router.push('/projects')
 }
 </script>

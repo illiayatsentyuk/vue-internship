@@ -5,6 +5,12 @@
             h1 {{ heading }}
             span {{ importance }}
             button(@click="handleEditTask") Edit
+        .task-component-heading-tags(v-if="tags && tags.length")
+            span Tags:
+            .task-component-heading-tags-list
+                span.task-tag(v-for="tag in tags" :key="tag.id")
+                    span.task-tag-color(:style="{ backgroundColor: tag.color }")
+                    span.task-tag-name {{ tag.name }}
         .task-component-heading-description
             .task-component-heading-description-deadline 
                 img(src="@/assets/task/deadline-icon.svg" alt="deadline-icon")
@@ -77,7 +83,7 @@ const props = defineProps<{
   addComment: (comment: string, id: number) => void
 }>()
 const emit = defineEmits(['addComment'])
-const { heading, importance, timeToEnd, assignedTo, status, description, attachments, comments, id } = props.task
+const { heading, importance, timeToEnd, assignedTo, status, description, attachments, comments, id, tags } = props.task
 const router = useRouter()
 
 const handleAddComment = async () => {
@@ -359,6 +365,49 @@ const handleEditTask = () => {
   padding: 24px;
   box-shadow: 0px 1px 2px 0px #0000000d;
   margin-bottom: 12px;
+}
+.task-component-heading-tags {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+
+  > span {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 14px;
+    color: #6b7280;
+  }
+}
+
+.task-component-heading-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.task-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+}
+
+.task-tag-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  border: 1px solid #e5e7eb;
+}
+
+.task-tag-name {
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 13px;
+  color: #374151;
 }
 .task-component-heading-title {
   display: flex;
