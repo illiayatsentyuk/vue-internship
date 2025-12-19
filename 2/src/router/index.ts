@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import dashboardRoutes from '@/modules/dashboard/routes/dashboard.routes'
-import authRoutes from '@/modules/auth/routes/auth.routes'
-import taskRoutes from '@/modules/task/routes/task.routes'
-import projectRoutes from '@/modules/project/routes/project.route'
-import tagRoutes from '@/modules/tag/routes/tag.routes'
+import dashboardRoutes from '@/router/routes/dashboard'
+import authRoutes from '@/router/routes/auth'
+import taskRoutes from '@/router/routes/task'
+import projectRoutes from '@/router/routes/project'
+import tagRoutes from '@/router/routes/tag'
+
 const routes = [
   {
     path: '/',
