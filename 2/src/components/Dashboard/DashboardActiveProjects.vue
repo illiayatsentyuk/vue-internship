@@ -2,39 +2,46 @@
   .dashboard-active-projects-section
     h1.dashboard-active-projects-section__title Active Projects
     .dashboard-active-projects-section__list
-      DashboardActiveProject(v-for="project in projects" :key="project.id" :activeProject="project")
+      DashboardActiveProject(v-if="content.length > 0" v-for="project in content" :key="project.id" :activeProject="project")
+      .dashboard-active-projects-section__list-empty(v-else)
+        p.dashboard-active-projects-section__list-empty-text No active projects
 </template>
 <script setup lang="ts">
-import type { DashboardActiveProject as DashboardActiveProjectType } from '@/types'
-import DashboardActiveProject from './DashboardActiveProject.vue'
-const projects: DashboardActiveProjectType[] = [
-  {
-    id: 1,
-    type: 'ontrack',
-    description: 'Upgrading backend infrastructure for better performance',
-    heading: 'Backend Infrastructure',
-    procent: 60,
-    timeToEnd: 'Due Apr 15, 2025',
-  },
-  {
-    id: 2,
-    type: 'inprogress',
-    description: 'Redesigning the mobile app interface for better user experience',
-    heading: 'Mobile App Redesign',
-    procent: 75,
-    timeToEnd: 'Due Mar 25, 2025',
-  },
-  {
-    id: 3,
-    type: 'review',
-    description: 'Creating a new analytics dashboard for clients',
-    heading: 'Analytics Dashboard',
-    procent: 90,
-    timeToEnd: 'Due Mar 30, 2025',
-  },
-]
+import DashboardActiveProject from '@/components/Dashboard/DashboardActiveProject.vue'
+import { useProjectsStore } from '@/stores/projects'
+import { computed } from 'vue'
+
+const projectsStore = useProjectsStore()
+const projects = projectsStore.projects
+
+const content = computed(() => {
+  return projects.slice(0, 3).map((project) => ({
+    id: project.id,
+    type: project.type,
+    description: project.description,
+    heading: project.heading,
+    procent: project.procent,
+    timeToEnd: project.timeToEnd,
+  }))
+})
 </script>
 <style lang="scss" scoped>
+.dashboard-active-projects-section__list-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.dashboard-active-projects-section__list-empty-text {
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 16px;
+  line-height: 16px;
+  color: #6b7280;
+}
+
 .dashboard-active-projects-section {
   width: 100%;
   padding: 0 32px;

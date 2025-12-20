@@ -2,24 +2,26 @@
   .dashboard-recent-tasks-section
     h1.dashboard-recent-tasks-section__title Recent Tasks
     .dashboard-recent-tasks-section__list
-      DashboardRecentTask(v-for="task in content" :key="task.id" :task="task")
+      DashboardRecentTask(v-if="content.length > 0" v-for="task in content" :key="task.id" :task="task")
+      .dashboard-recent-tasks-section__list-empty(v-else)
+        p.dashboard-recent-tasks-section__list-empty-text No recent tasks
 </template>
 <script setup lang="ts">
 import DashboardRecentTask from '@/components/Dashboard/DashboardRecentTask.vue'
-const content = [
-  {
-    id: 1,
-    importance: 'urgent',
-    heading: 'Update API Documentation',
-    timeToEnd: 'Due Today',
-  },
-  {
-    id: 2,
-    importance: 'inprogress',
-    heading: 'Design System Updates',
-    timeToEnd: 'Due in 3 days',
-  },
-]
+import { useTasksStore } from '@/stores/tasks'
+import { computed } from 'vue'
+
+const tasksStore = useTasksStore()
+const tasks = tasksStore.tasks
+
+const content = computed(() => {
+  return tasks.slice(0, 3).map((task) => ({
+    id: task.id,
+    importance: task.importance,
+    heading: task.heading,
+    timeToEnd: task.timeToEnd,
+  }))
+})
 </script>
 
 <style lang="scss" scoped>
@@ -42,5 +44,21 @@ const content = [
   justify-content: space-between;
   width: 100%;
   gap: 16px;
+}
+
+.dashboard-recent-tasks-section__list-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.dashboard-recent-tasks-section__list-empty-text {
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 16px;
+  line-height: 16px;
+  color: #6b7280;
 }
 </style>

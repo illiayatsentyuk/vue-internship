@@ -119,7 +119,7 @@
 
 <script setup lang="ts">     
 import { reactive, ref, computed, watch } from 'vue'
-import type { CreateTaskForm } from '@/types'
+import type { CreateTaskForm, Project } from '@/types'
 import { useTagsStore } from '@/stores/tags'
 import { useProjectsStore } from '@/stores/projects'
 import { useVuelidate } from '@vuelidate/core'
@@ -153,24 +153,6 @@ const importanceOfProject = [{
   color: '#FF00FF',
 }]
 
-const selectedImportanceName = computed(() => {
-  const selected = importanceOfProject.find(imp => String(imp.id) === form.importance)
-  return selected ? selected.name : ''
-})
-
-const selectedProjectName = computed(() => {
-  return form.project ? form.project.heading : ''
-})
-
-const selectImportance = (importance: typeof importanceOfProject[0]) => {
-  form.importance = String(importance.id)
-  v$.value.importance.$touch()
-  importanceDropdownWasOpened.value = false
-  if (importanceDropdown.value) {
-    importanceDropdown.value.close()
-  }
-}
-
 watch(() => importanceDropdown.value?.isOpen?.value, (isOpen) => {
   if (isOpen) {
     importanceDropdownWasOpened.value = true
@@ -180,13 +162,6 @@ watch(() => importanceDropdown.value?.isOpen?.value, (isOpen) => {
   }
 })
 
-const selectProject = (project: typeof availableProjects[0]) => {
-  form.project = project
-  v$.value.project.$touch()
-  if (projectDropdown.value) {
-    projectDropdown.value.close()
-  }
-}
 const rules = {
     heading: { required, minLength: minLength(3), maxLength: maxLength(100) },
     description: { required, minLength: minLength(3), maxLength: maxLength(1000) },
@@ -214,6 +189,28 @@ const form = reactive<CreateTaskForm>({
     comments: [],
 })
 const v$ = useVuelidate(rules, form)
+
+const selectedImportanceName = computed(() => {
+    const importance = importanceOfProject.find(imp => String(imp.id) === form.importance)
+    return importance ? importance.name : ''
+})
+
+const selectImportance = (importance: { id: number; name: string; color: string }) => {
+    form.importance = String(importance.id)
+    importanceDropdown.value?.close()
+    v$.value.importance.$touch()
+}
+
+const selectedProjectName = computed(() => {
+    return form.project?.heading || ''
+})
+
+const selectProject = (project: Project) => {
+    form.project = project
+    projectDropdown.value?.close()
+    v$.value.project.$touch()
+}
+
 const handleCreateTask = async () => {
     const result = await v$.value.$validate()
     if (!result) {

@@ -28,6 +28,58 @@
                     | {{ v$.description.required ? 'Description is required.' : '' }}
                     | {{ v$.description.minLength?.$invalid ? ' Minimum 3 characters.' : '' }}
                     | {{ v$.description.maxLength?.$invalid ? ' Maximum 1000 characters.' : '' }}
+            .create-project-form__form-group(:class="{ 'create-project-form__form-group--error': v$.type.$error }")
+                label.create-project-form__label(for="type") Type
+                Dropdown(ref="typeDropdown")
+                  template(v-slot:trigger="{ isOpen }")
+                    button.create-project-form__select(
+                      type="button"
+                      :class="{ 'create-project-form__select--error': v$.type.$error }"
+                    )
+                        span {{ selectedTypeName || 'Select type' }}
+                        img.create-project-form__select-icon(
+                          src="@/assets/dashboard/arrow.svg"
+                          alt="arrow-down"
+                          :class="{ 'create-project-form__select-icon--open': isOpen }"
+                        )
+                  template(v-slot:content)
+                    .create-project-form__select-options
+                      .create-project-form__select-option(
+                        v-for="typeOption in typeOptions"
+                        :key="typeOption.value"
+                        @click="selectType(typeOption.value)"
+                        :class="{ 'create-project-form__select-option--selected': form.type === typeOption.value }"
+                      )
+                        span {{ typeOption.label }}
+                span.create-project-form__error-message(v-if="v$.type.$error")
+                    | Type is required.
+            .create-project-form__form-group(:class="{ 'create-project-form__form-group--error': v$.procent.$error }")
+                label.create-project-form__label(for="procent") Progress (%)
+                input.create-project-form__input(
+                    type="number"
+                    id="procent"
+                    v-model.number="form.procent"
+                    :class="{ 'create-project-form__input--error': v$.procent.$error }"
+                    @blur="v$.procent.$touch"
+                    placeholder="Enter progress percentage"
+                    min="0"
+                    max="100"
+                )
+                span.create-project-form__error-message(v-if="v$.procent.$error")
+                    | {{ v$.procent.required ? 'Progress is required.' : '' }}
+                    | {{ v$.procent.minValue?.$invalid ? ' Minimum 0%.' : '' }}
+                    | {{ v$.procent.maxValue?.$invalid ? ' Maximum 100%.' : '' }}
+            .create-project-form__form-group(:class="{ 'create-project-form__form-group--error': v$.timeToEnd.$error }")
+                label.create-project-form__label(for="timeToEnd") Deadline
+                input.create-project-form__input(
+                    type="datetime-local"
+                    id="timeToEnd"
+                    v-model="form.timeToEnd"
+                    :class="{ 'create-project-form__input--error': v$.timeToEnd.$error }"
+                    @blur="v$.timeToEnd.$touch"
+                )
+                span.create-project-form__error-message(v-if="v$.timeToEnd.$error")
+                    | {{ v$.timeToEnd.required ? 'Deadline is required.' : '' }}
             .create-project-form__form-group.create-project-form__user-select-group
                 label.create-project-form__label(for="contributors") Contributors
                 select#contributors.create-project-form__user-select(multiple)
@@ -36,18 +88,40 @@
             button.create-project-form__submit-button(type="submit") Create
 </template>
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, ref, computed } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
-import { required, minLength, maxLength } from '@vuelidate/validators'
+import { required, minLength, maxLength, minValue, maxValue } from '@vuelidate/validators'
 import { useUsersStore } from '@/stores/users'
+import Dropdown from '@/ui/Dropdown.vue'
 import type { CreateProjectForm } from '@/types'
 const emit = defineEmits(['createProject'])
 const usersStore = useUsersStore()
 const availableUsers = usersStore.users
 
+const typeDropdown = ref<InstanceType<typeof Dropdown> & { isOpen?: { value: boolean } } | null>(null)
+
+const typeOptions = [
+    { value: 'ontrack', label: 'On Track' },
+    { value: 'inprogress', label: 'In Progress' },
+    { value: 'review', label: 'Review' },
+]
+
+const selectedTypeName = computed(() => {
+    const option = typeOptions.find(opt => opt.value === form.type)
+    return option ? option.label : ''
+})
+
+const selectType = (type: 'ontrack' | 'inprogress' | 'review') => {
+    form.type = type
+    typeDropdown.value?.close()
+}
+
 const form = reactive<CreateProjectForm>({
     heading: '',
     description: '',
+    type: 'ontrack',
+    procent: 0,
+    timeToEnd: '',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     tasks: [],
@@ -57,6 +131,9 @@ const form = reactive<CreateProjectForm>({
 const rules = {
     heading: { required, minLength: minLength(3), maxLength: maxLength(100) },
     description: { required, minLength: minLength(3), maxLength: maxLength(1000) },
+    type: { required },
+    procent: { required, minValue: minValue(0), maxValue: maxValue(100) },
+    timeToEnd: { required },
 }
 const v$ = useVuelidate(rules, form)
 const handleCreateProject = async () => {
@@ -103,7 +180,8 @@ const handleCreateProject = async () => {
 }
 
 .create-project-form__input,
-.create-project-form__textarea {
+.create-project-form__textarea,
+.create-project-form__select {
   width: 100%;
   padding: 10px 12px;
   border-radius: 8px;
@@ -117,8 +195,16 @@ const handleCreateProject = async () => {
     background-color 0.15s ease;
 }
 
+.create-project-form__select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
 .create-project-form__input:focus,
-.create-project-form__textarea:focus {
+.create-project-form__textarea:focus,
+.create-project-form__select:focus {
   outline: none;
   border-color: #6366f1;
   box-shadow: 0 0 0 1px #6366f1;
@@ -126,9 +212,54 @@ const handleCreateProject = async () => {
 }
 
 .create-project-form__input--error,
-.create-project-form__textarea--error {
+.create-project-form__textarea--error,
+.create-project-form__select--error {
   border-color: #ef4444;
   background-color: #fef2f2;
+}
+
+.create-project-form__select-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  margin-left: 8px;
+
+  &--open {
+    transform: rotate(180deg);
+  }
+}
+
+.create-project-form__select-options {
+  padding: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  display: block;
+  width: 100%;
+}
+
+.create-project-form__select-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  font-size: 14px;
+  color: #374151;
+  width: 100%;
+  box-sizing: border-box;
+
+  &:hover {
+    background-color: #f3f4f6;
+  }
+
+  &--selected {
+    background-color: #eef2ff;
+    color: #4f46e5;
+    font-weight: 500;
+  }
 }
 
 .create-project-form__input::placeholder,
