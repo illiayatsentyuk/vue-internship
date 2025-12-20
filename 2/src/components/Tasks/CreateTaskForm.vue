@@ -165,18 +165,16 @@ const selectedProjectName = computed(() => {
 const selectImportance = (importance: typeof importanceOfProject[0]) => {
   form.importance = String(importance.id)
   v$.value.importance.$touch()
-  importanceDropdownWasOpened.value = false // Reset flag since selection was made
+  importanceDropdownWasOpened.value = false
   if (importanceDropdown.value) {
     importanceDropdown.value.close()
   }
 }
 
-// Track if importance dropdown was opened to trigger validation on blur
 watch(() => importanceDropdown.value?.isOpen?.value, (isOpen) => {
   if (isOpen) {
     importanceDropdownWasOpened.value = true
   } else if (importanceDropdownWasOpened.value && !form.importance) {
-    // Dropdown was closed without selection, trigger validation
     v$.value.importance.$touch()
     importanceDropdownWasOpened.value = false
   }
