@@ -1,32 +1,33 @@
 <template lang="pug">
   .project-view
     .project-view__header
-      h1 {{ project.heading }}
+      h1.project-view__title {{ project.heading }}
       p.project-view__subtitle Project details overview
 
     .project-view__content
       .project-view__card
         .project-view__section
-          h2 Overview
-          p {{ project.description }}
+          h2.project-view__section-title Overview
+          p.project-view__section-text {{ project.description }}
 
         .project-view__grid
           .project-view__section
-            h3 Meta
-            p
+            h3.project-view__section-title Meta
+            p.project-view__section-text
               strong Created at:
               |  {{ ' ' + project.createdAt }}
-            p
+            p.project-view__section-text
               strong Updated at:
               |  {{ ' ' + project.updatedAt }}
 
           .project-view__section
-            h3 Contributors
-            p {{ project.contributors.map((contributor) => contributor.firstName + ' ' + contributor.lastName).join(', ') }}
+            h3.project-view__section-title Contributors
+            p.project-view__section-text {{ project.contributors.map((contributor) => contributor.firstName + ' ' + contributor.lastName).join(', ') }}
 
         .project-view__section
-          h3 Tasks
-          p {{ project.tasks.length ? project.tasks.map((task) => task.heading).join(', ') : 'No tasks yet.' }}
+          h3.project-view__section-title Tasks
+          p.project-view__section-text.project-view__section-text--clickable(v-if="project.tasks.length > 0" v-for="task in project.tasks" :key="task.id" @click="$router.push(`/tasks/${task.id}`)") {{ task.heading }}
+          p.project-view__section-text(v-else) No tasks yet.
 </template>
 
 <script setup lang="ts">
@@ -56,13 +57,14 @@ if (!project) {
     display: flex;
     flex-direction: column;
     gap: 6px;
+  }
 
-    h1 {
-      font-size: 28px;
-      font-weight: 600;
-      color: #111827;
-      letter-spacing: -0.02em;
-    }
+  &__title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #111827;
+    letter-spacing: -0.02em;
+    margin: 0;
   }
 
   &__subtitle {
@@ -91,17 +93,31 @@ if (!project) {
   }
 
   &__section {
-    h2,
-    h3 {
-      margin: 0 0 8px;
-      font-weight: 600;
-      color: #111827;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__section-title {
+    margin: 0 0 8px;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  &__section-text {
+    margin: 0 0 4px;
+    font-size: 14px;
+    color: #4b5563;
+
+    &:last-child {
+      margin-bottom: 0;
     }
 
-    p {
-      margin: 0 0 4px;
-      font-size: 14px;
-      color: #4b5563;
+    &--clickable {
+      cursor: pointer;
+
+      &:hover {
+        color: #111827;
+      }
     }
   }
 
@@ -109,6 +125,12 @@ if (!project) {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
+  }
+}
+.project-view__section-text.project-view__section-text--clickable{
+  cursor: pointer;
+  &:hover {
+    color: #111827;
   }
 }
 </style>

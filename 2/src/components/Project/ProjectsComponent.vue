@@ -69,29 +69,5 @@ const deleteProject = (id: number) => {
   }
 }
 
-:deep(.accordion-item) {
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-}
 
-:deep(.accordion-button) {
-  font-weight: 600;
-  font-size: 16px;
-  color: #111827;
-  background-color: #f9fafb;
-  padding: 14px 20px;
-
-  &:not(.collapsed) {
-    color: #1d4ed8;
-    background-color: #eef2ff;
-    box-shadow: inset 0 -1px 0 #e5e7eb;
-  }
-}
-
-:deep(.accordion-body) {
-  padding: 16px 20px 18px;
-  background-color: #ffffff;
-}
 </style>
