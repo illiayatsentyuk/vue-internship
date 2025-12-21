@@ -32,7 +32,7 @@
                 label.edit-project-form__label(for="contributors") Contributors
                 select#contributors.edit-project-form__user-select(multiple)
                     option(disabled selected) Select contributors…
-                    option(v-for="user in availableUsers" :value="user.id" :key="user.id") {{ user.name }}
+                    option(v-for="user in availableUsers" :value="user.id" :key="user.id") {{ user.firstName }} {{ user.lastName }}
             button.edit-project-form__submit-button(type="submit") Edit
 </template>
 <script setup lang="ts">

@@ -59,6 +59,19 @@ export const useProjectsStore = defineStore('projects', () => {
     return projects.value.find((element: Project) => element.id === id)
   }
 
+  // Sync user updates to project contributors
+  watch(
+    () => usersStore.users,
+    (newUsers) => {
+      projects.value.forEach((project) => {
+        project.contributors = project.contributors.map((contributor) => {
+          const updatedUser = newUsers.find((user) => user.id === contributor.id)
+          return updatedUser || contributor
+        })
+      })
+    },
+    { deep: true }
+  )
 
   return { projects, addProject, editProject, deleteProject, getProjectById, updateProjectsProcent }
 })

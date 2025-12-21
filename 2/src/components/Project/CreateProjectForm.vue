@@ -84,7 +84,7 @@
                 label.create-project-form__label(for="contributors") Contributors
                 select#contributors.create-project-form__user-select(multiple)
                     option(disabled selected) Select contributors…
-                    option(v-for="user in availableUsers" :value="user.id" :key="user.id") {{ user.name }}
+                    option(v-for="user in availableUsers" :value="user.id" :key="user.id") {{ user.firstName }} {{ user.lastName }}
             button.create-project-form__submit-button(type="submit") Create
 </template>
 <script setup lang="ts">

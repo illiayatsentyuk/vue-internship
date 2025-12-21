@@ -22,7 +22,7 @@
 
           .project-view__section
             h3 Contributors
-            p {{ project.contributors.map((contributor) => contributor.name).join(', ') }}
+            p {{ project.contributors.map((contributor) => contributor.firstName + ' ' + contributor.lastName).join(', ') }}
 
         .project-view__section
           h3 Tasks
