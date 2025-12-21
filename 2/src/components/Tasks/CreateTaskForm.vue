@@ -48,7 +48,7 @@
                         v-for="importance in importanceOfProject"
                         :key="importance.id"
                         @click="selectImportance(importance)"
-                        :class="{ 'create-task-form__select-option--selected': form.importance === String(importance.id) }"
+                        :class="{ 'create-task-form__select-option--selected': form.importance === importance.name.toLowerCase() }"
                       )
                         span.create-task-form__select-option-color(
                           :style="{ backgroundColor: importance.color }"
@@ -192,7 +192,7 @@ const form = reactive<CreateTaskForm>({
 const v$ = useVuelidate(rules, form)
 
 const selectedImportanceName = computed(() => {
-    const importance = importanceOfProject.find(imp => String(imp.id) === form.importance)
+    const importance = importanceOfProject.find(imp => imp.name.toLowerCase() === form.importance.toLowerCase())
     return importance ? importance.name : ''
 })
 
