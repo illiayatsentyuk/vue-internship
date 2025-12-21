@@ -30,11 +30,10 @@ export const useProjectsStore = defineStore('projects', () => {
   }
 
   const updateProjectsProcent = () => {
-    projects.value = projects.value.map((project: Project) => {
-      console.log(project)
-      return {
-        ...project,
-        procent: calculateProcent(project)
+    projects.value.forEach((project: Project) => {
+      const newProcent = calculateProcent(project)
+      if (project.procent !== newProcent) {
+        project.procent = newProcent
       }
     })
   }
@@ -60,9 +59,6 @@ export const useProjectsStore = defineStore('projects', () => {
     return projects.value.find((element: Project) => element.id === id)
   }
 
-  watch(projects, () => {
-    updateProjectsProcent()
-  }, { deep: true })
 
   return { projects, addProject, editProject, deleteProject, getProjectById, updateProjectsProcent }
 })

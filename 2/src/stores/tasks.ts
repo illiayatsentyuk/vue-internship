@@ -22,6 +22,7 @@ export const useTasksStore = defineStore('tasks', () => {
     const project = projects.find((p: Project) => p.tasks.some((t: TaskComponent) => t.id === id))
     if (project) {
       project.tasks = project.tasks.map((t: TaskComponent) => (t.id === id ? updatedTask : t))
+      projectsStore.updateProjectsProcent()
     }
   }
   
@@ -32,6 +33,7 @@ export const useTasksStore = defineStore('tasks', () => {
     const project = projects.find((p: Project) => p.tasks.some((t: TaskComponent) => t.id === id))
     if (project) {
       project.tasks = project.tasks.filter((t: TaskComponent) => t.id !== id)
+      projectsStore.updateProjectsProcent()
     }
   }
   
@@ -43,6 +45,7 @@ export const useTasksStore = defineStore('tasks', () => {
     const project = projects.find((p: Project) => p.id === task.project.id)
     if (project) {
       project.tasks.push(newTask)
+      projectsStore.updateProjectsProcent()
     }
   }
 
