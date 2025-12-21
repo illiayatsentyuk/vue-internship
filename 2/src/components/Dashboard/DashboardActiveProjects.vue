@@ -15,6 +15,7 @@ const projectsStore = useProjectsStore()
 const projects = projectsStore.projects
 
 const content = computed(() => {
+  console.log(projects)
   return projects.slice(0, 3).map((project) => ({
     id: project.id,
     status: project.status,

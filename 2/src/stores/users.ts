@@ -19,6 +19,10 @@ export const useUsersStore = defineStore('users', () => {
   const returnBiggestId = computed(() => {
     return users.value.reduce((max, user) => Math.max(max, user.id), 0)
   })
+  function changeAvatar(id: number, avatar: string) {
+    users.value = users.value.map((element) => (element.id === id ? { ...element, avatar } : element))
+  }
+
   function addUser(user: Omit<User, 'id'>) {
     users.value.push({ ...user, id: returnBiggestId.value + 1 })
   }
@@ -31,5 +35,5 @@ export const useUsersStore = defineStore('users', () => {
   const getUserById = (id: number) => {
     return users.value.find((element) => element.id === id)
   }
-  return { users, addUser, editUser, deleteUser, getUserById, returnBiggestId }
+  return { users, addUser, editUser, deleteUser, getUserById, returnBiggestId, changeAvatar }
 })

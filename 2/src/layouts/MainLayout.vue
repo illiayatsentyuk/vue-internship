@@ -10,7 +10,8 @@
           p.main-layout__navbar-settings-section-heading Settings
           NavBarListItem(v-for="item in navBarSettingsItems" :key="item.id" v-bind="item")
       .main-layout__navbar-account-information
-        img.main-layout__navbar-account-logo(src="@/assets/layouts/account-logo.png")
+        img.main-layout__navbar-account-logo(v-if="currentUser?.avatar" :src="currentUser?.avatar" src="@/assets/layouts/account-logo.png")
+        img.main-layout__navbar-account-logo(v-else src="@/assets/layouts/account-logo.png")
         .main-layout__navbar-account-description
           h1.main-layout__navbar-account-name {{ accountName }}
           p.main-layout__navbar-account-email {{ accountEmail }}

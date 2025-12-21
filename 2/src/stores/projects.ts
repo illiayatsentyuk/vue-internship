@@ -1,18 +1,11 @@
 import { defineStore } from 'pinia'
 import { useUsersStore } from '@/stores/users'
 import type { Project } from '@/types'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 export const useProjectsStore = defineStore('projects', () => {
   const usersStore = useUsersStore()
   const availableUsers = usersStore.getUserById(1)
-
-  const procent = ref(0)
-  const calculateProcent = ()=>{
-    const totalTasks = projects.value.reduce((acc, project) => acc + project.tasks.length, 0)
-    const doneTasks = projects.value.reduce((acc, project) => acc + project.tasks.filter((task) => task.isDone).length, 0)
-    procent.value = Math.round((doneTasks / totalTasks) * 100)
-  }
 
   const projects = ref<Project[]>([
     {
@@ -21,31 +14,55 @@ export const useProjectsStore = defineStore('projects', () => {
       description: 'Description 1',
       contributors: availableUsers ? [availableUsers] : [],
       status: 'ontrack',
-      procent: procent.value,
+      procent: 0,
       timeToEnd: '',
       createdAt: '2021-01-01',
       updatedAt: '2021-01-01',
       tasks: [],
     },
   ])
-  const returnBiggestId = computed(() => {
-    return projects.value.reduce((max, project) => Math.max(max, project.id), 0)
+
+  const calculateProcent = (project: Project): number => {
+    const totalTasks = project.tasks.length
+    if (totalTasks === 0) return 0
+    const totalDone = project.tasks.filter((task) => task.isDone).length
+    return Math.round((totalDone / totalTasks) * 100)
+  }
+
+  const updateProjectsProcent = () => {
+    projects.value = projects.value.map((project: Project) => {
+      console.log(project)
+      return {
+        ...project,
+        procent: calculateProcent(project)
+      }
+    })
+  }
+
+  const returnBiggestId = computed((): number => {
+    return projects.value.reduce((max: number, project: Project) => Math.max(max, project.id), 0)
   })
 
   function addProject(project: Omit<Project, 'id'>) {
-    projects.value.push({ ...project, id: returnBiggestId.value + 1 })
-    calculateProcent()
+    const newProject: Project = { ...project, id: returnBiggestId.value + 1, procent: 0 }
+    newProject.procent = calculateProcent(newProject)
+    projects.value.push(newProject)
   }
   function editProject(project: Omit<Project, 'id'>, id: number) {
-    projects.value = projects.value.map((element) => (element.id === id ? { ...project, id } : element))
-    calculateProcent()
+    const updatedProject: Project = { ...project, id, procent: 0 }
+    updatedProject.procent = calculateProcent(updatedProject)
+    projects.value = projects.value.map((element: Project) => (element.id === id ? updatedProject : element))
   }
   function deleteProject(id: number) {
-    projects.value = projects.value.filter((element) => element.id !== id)
-    calculateProcent()
+    projects.value = projects.value.filter((element: Project) => element.id !== id)
   }
   const getProjectById = (id: number) => {
-    return projects.value.find((element) => element.id === id)
+    return projects.value.find((element: Project) => element.id === id)
   }
-  return { projects, addProject, editProject, deleteProject, getProjectById, procent}
+
+  watch(projects, () => {
+    updateProjectsProcent()
+  }, { deep: true })
+
+  return { projects, addProject, editProject, deleteProject, getProjectById, updateProjectsProcent }
 })

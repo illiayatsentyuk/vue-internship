@@ -10,9 +10,11 @@ import EditTaskForm from '@/components/Tasks/EditTaskForm.vue'
 import { useTasksStore } from '@/stores/tasks'
 import type { TaskComponent } from '@/types'
 import { useRoute, useRouter } from 'vue-router'
+import { useProjectsStore } from '@/stores/projects'
 const route = useRoute()
 const router = useRouter()
 const tasksStore = useTasksStore()
+const projectsStore = useProjectsStore()
 const task = tasksStore.getTaskById(Number(route.params.id))
 if (!task) {
     router.push('/tasks')
@@ -20,6 +22,7 @@ if (!task) {
 const handleEditTask = (task: TaskComponent) => {
     console.log(task)
     tasksStore.editTask(task, Number(route.params.id))
+    projectsStore.updateProjectsProcent()
     router.push('/tasks')
 }
 </script>

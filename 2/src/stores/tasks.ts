@@ -1,14 +1,9 @@
-import type { TaskComponent } from '@/types'
+import type { TaskComponent, Project } from '@/types'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { useUsersStore } from './users'
 import { useProjectsStore } from './projects'
 
-const projectsStore = useProjectsStore()
-const availableProjects = projectsStore.projects
-if (!availableProjects) {
-  throw new Error('Projects not found')
-}
 const usersStore = useUsersStore()
 const availableUsers = usersStore.users
 if (!availableUsers) {
@@ -16,30 +11,59 @@ if (!availableUsers) {
 }
 
 export const useTasksStore = defineStore('tasks', () => {
-  const tasks = ref<TaskComponent[]>([
-  ])
+  const tasks = ref<TaskComponent[]>([])
+  const projectsStore = useProjectsStore()
+  
   function editTask(task: Omit<TaskComponent, 'id'>, id: number) {
-    tasks.value = tasks.value.map((element) => (element.id === id ? { ...task, id } : element))
+    const updatedTask = { ...task, id }
+    tasks.value = tasks.value.map((element) => (element.id === id ? updatedTask : element))
+    
+    const projects = projectsStore.projects
+    const project = projects.find((p: Project) => p.tasks.some((t: TaskComponent) => t.id === id))
+    if (project) {
+      project.tasks = project.tasks.map((t: TaskComponent) => (t.id === id ? updatedTask : t))
+    }
   }
+  
   function deleteTask(id: number) {
     tasks.value = tasks.value.filter((element) => element.id !== id)
+    
+    const projects = projectsStore.projects
+    const project = projects.find((p: Project) => p.tasks.some((t: TaskComponent) => t.id === id))
+    if (project) {
+      project.tasks = project.tasks.filter((t: TaskComponent) => t.id !== id)
+    }
   }
+  
   function addTask(task: Omit<TaskComponent, 'id'>) {
-    tasks.value.push({ ...task, id: returnBiggestId.value + 1 })
-    availableProjects.find((project) => project.id === task.project.id)?.tasks.push({ ...task, id: returnBiggestId.value + 1 })
+    const newTask = { ...task, id: returnBiggestId.value + 1 }
+    tasks.value.push(newTask)
+    
+    const projects = projectsStore.projects
+    const project = projects.find((p: Project) => p.id === task.project.id)
+    if (project) {
+      project.tasks.push(newTask)
+    }
   }
 
   const getTaskById = (id: number) => {
     return tasks.value.find((element) => element.id === id)
   }
 
-  const addCommentToTask = (taskId: number, content:string) => {
-    return tasks.value.map((element) => {
-      if (element.id === taskId) {
-        element.comments.push(content)
+  const addCommentToTask = (taskId: number, content: string) => {
+    const task = tasks.value.find((element) => element.id === taskId)
+    if (task) {
+      task.comments.push(content)
+      
+      const projects = projectsStore.projects
+      const project = projects.find((p: Project) => p.tasks.some((t: TaskComponent) => t.id === taskId))
+      if (project) {
+        const projectTask = project.tasks.find((t: TaskComponent) => t.id === taskId)
+        if (projectTask) {
+          projectTask.comments.push(content)
+        }
       }
-      return element
-    })
+    }
   }
 
   const returnBiggestId = computed(() => {

@@ -1,25 +1,33 @@
 <template lang="pug">
   .profile-photo
     .profile-photo__image-container
-      img.profile-photo__image(src="@/assets/layouts/account-logo.png" alt="Profile Photo")
+      img.profile-photo__image(v-if="currentUser?.avatar" :src="currentUser?.avatar" alt="Profile Photo")
+      img.profile-photo__image(v-else src="@/assets/layouts/account-logo.png" alt="Profile Photo")
     .profile-photo__actions
-      button.profile-photo__button.profile-photo__button--primary
+      button.profile-photo__button.profile-photo__button--primary(@click="changeCropVisibility")
         svg.profile-photo__button-icon(width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg")
           path(d="M8 2V14M2 8H14" stroke="white" stroke-width="2" stroke-linecap="round")
         span Upload New Photo
-      button.profile-photo__button.profile-photo__button--secondary
+      button.profile-photo__button.profile-photo__button--secondary(@click="changeCropVisibility")
         svg.profile-photo__button-icon(width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg")
           path(d="M8 8C10.2091 8 12 6.20914 12 4C12 1.79086 10.2091 0 8 0C5.79086 0 4 1.79086 4 4C4 6.20914 5.79086 8 8 8Z" fill="#6B7280")
           path(d="M8 10C4.68629 10 2 12.6863 2 16H14C14 12.6863 11.3137 10 8 10Z" fill="#6B7280")
         span Use Gravatar
+      Teleport(to="body" v-if="showCropperModal")
+        CropperModal(@changeCropVisibility="changeCropVisibility" )
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useUsersStore } from '@/stores/users'
 import CropperModal from '@/components/Profile/CropperModal.vue'
+import { Teleport } from 'vue'
 const usersStore = useUsersStore()
 const currentUser = computed(() => usersStore.getUserById(1))
+const showCropperModal = ref(false)
+const changeCropVisibility = () => {
+  showCropperModal.value = !showCropperModal.value
+}
 </script>
 
 <style lang="scss" scoped>

@@ -1,5 +1,5 @@
 <template lang="pug">
-  .settings-view
+  .settings-view(id="profile-view")
     .settings-view__header
       h1.settings-view__title Profile Settings
       p.settings-view__subtitle Manage your account settings and preferences
@@ -22,7 +22,7 @@ if (!currentUser.value) {
   throw new Error('User not found')
 }
 const handleSavePersonalInformation = (user: Omit<User, 'id' | 'password' | 'tasks' | 'projects' | 'createdAt' | 'updatedAt'>) => {
-  usersStore.editUser({ ...user, password: currentUser.value!.password, tasks: currentUser.value!.tasks, projects: currentUser.value!.projects, createdAt: currentUser.value!.createdAt, updatedAt: currentUser.value!.updatedAt }, currentUser.value!.id)
+  usersStore.editUser({ ...user, password: currentUser.value!.password, tasks: currentUser.value!.tasks, projects: currentUser.value!.projects, createdAt: currentUser.value!.createdAt, updatedAt: currentUser.value!.updatedAt, avatar: currentUser.value!.avatar }, currentUser.value!.id)
 }
 </script>
 
