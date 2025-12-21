@@ -13,4 +13,5 @@ export interface TaskComponent {
   updatedAt: string
   attachments: string[]
   comments: string[]
+  isDone: boolean
 }

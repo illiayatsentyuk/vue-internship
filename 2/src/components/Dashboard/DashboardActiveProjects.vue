@@ -17,7 +17,7 @@ const projects = projectsStore.projects
 const content = computed(() => {
   return projects.slice(0, 3).map((project) => ({
     id: project.id,
-    type: project.type,
+    status: project.status,
     description: project.description,
     heading: project.heading,
     procent: project.procent,

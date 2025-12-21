@@ -187,6 +187,7 @@ const form = reactive<CreateTaskForm>({
     updatedAt: new Date().toISOString(),
     attachments: ['Penos1 1', 'Attachment 2'],
     comments: [],
+    isDone: false,
 })
 const v$ = useVuelidate(rules, form)
 

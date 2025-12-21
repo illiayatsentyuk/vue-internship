@@ -4,7 +4,7 @@ import type { User } from "../users/user"
 export interface CreateProjectForm {
   heading: string
   description: string
-  type: 'ontrack' | 'inprogress' | 'review'
+  status: 'ontrack' | 'inprogress' | 'review'
   procent: number
   timeToEnd: string
   createdAt: string

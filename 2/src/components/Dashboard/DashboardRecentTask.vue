@@ -4,7 +4,7 @@
       h1.dashboard-recent-task__heading-title {{ heading }}
       span.dashboard-recent-task__heading-badge(:class="`dashboard-recent-task__heading-badge--importance-${importance}`") {{ importanceLabel }}
     .dashboard-recent-task__progress
-      .dashboard-recent-task__progress-bar(:class="`dashboard-recent-task__progress-bar--importance-${importance}`")
+      .dashboard-recent-task__progress-bar(:class="`dashboard-recent-task__progress-bar--importance-${importance}`" :style="{ width: isDone ? '100%' : '0%' }")
     .dashboard-recent-task__time
       img.dashboard-recent-task__time-icon(src="@/assets/dashboard/timer-icon.svg" alt="timer-icon")
       p.dashboard-recent-task__time-text {{ timeToEnd }}
@@ -16,7 +16,7 @@ import type { Task } from '@/types'
 const props = defineProps<{
   task: Task
 }>()
-const { importance, heading, timeToEnd } = props.task
+const { importance, heading, timeToEnd, isDone } = props.task
 
 const importanceLabel = computed(() => {
   switch (importance) {
@@ -116,7 +116,7 @@ const importanceLabel = computed(() => {
 
 .dashboard-recent-task__progress-bar {
   height: 100%;
-  width: 67%;
+  width: 0%;
   transition: width 0.3s ease;
   border-radius: 9999px;
 }

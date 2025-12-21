@@ -13,4 +13,5 @@ export interface CreateTaskForm {
   updatedAt: string
   attachments: string[]
   comments: string[]
+  isDone: boolean
 }

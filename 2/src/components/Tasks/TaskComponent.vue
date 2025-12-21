@@ -1,6 +1,9 @@
 <template lang="pug">
   .task-component
     section.task-component__heading
+        .task-component__heading-status
+            span.task-component__heading-status-label Is Done:
+            span.task-component__heading-status-value {{ isDone ? 'Yes' : 'No' }}
         .task-component__heading-title
             h1.task-component__heading-title-text {{ heading }}
             span.task-component__heading-title-badge {{ importance }}
@@ -31,7 +34,7 @@
             span.task-component__heading-progress-header
                 p.task-component__heading-progress-label Progress
                 p.task-component__heading-progress-value 
-                    strong 67%
+                    strong {{ isDone ? '100%' : '0%' }}
             .task-component__progress
                 .task-component__progress-bar.task-component__progress-bar--review
     section.task-component__description
@@ -88,7 +91,7 @@ const props = defineProps<{
   addComment: (comment: string, id: number) => void
 }>()
 const emit = defineEmits(['addComment'])
-const { heading, importance, timeToEnd, assignedTo, status, description, attachments, comments, id, tags } = props.task
+const { heading, importance, timeToEnd, assignedTo, status, description, attachments, comments, id, tags, isDone } = props.task
 const router = useRouter()
 
 const handleAddComment = async () => {
@@ -123,6 +126,26 @@ const handleEditTask = () => {
   padding: 24px;
   box-shadow: 0px 1px 2px 0px #0000000d;
   margin-bottom: 12px;
+}
+
+.task-component__heading-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.task-component__heading-status-label {
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.task-component__heading-status-value {
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 14px;
+  color: #000000;
 }
 
 .task-component__heading-title {

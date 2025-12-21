@@ -34,7 +34,7 @@
                   template(v-slot:trigger="{ isOpen }")
                     button.create-project-form__select(
                       type="button"
-                      :class="{ 'create-project-form__select--error': v$.type.$error }"
+                      :class="{ 'create-project-form__select--error': v$.status.$error }"
                     )
                         span {{ selectedTypeName || 'Select type' }}
                         img.create-project-form__select-icon(
@@ -48,10 +48,10 @@
                         v-for="typeOption in typeOptions"
                         :key="typeOption.value"
                         @click="selectType(typeOption.value)"
-                        :class="{ 'create-project-form__select-option--selected': form.type === typeOption.value }"
+                        :class="{ 'create-project-form__select-option--selected': form.status === typeOption.value }"
                       )
                         span {{ typeOption.label }}
-                span.create-project-form__error-message(v-if="v$.type.$error")
+                span.create-project-form__error-message(v-if="v$.status.$error")
                     | Type is required.
             .create-project-form__form-group(:class="{ 'create-project-form__form-group--error': v$.procent.$error }")
                 label.create-project-form__label(for="procent") Progress (%)
@@ -107,19 +107,19 @@ const typeOptions = [
 ]
 
 const selectedTypeName = computed(() => {
-    const option = typeOptions.find(opt => opt.value === form.type)
+    const option = typeOptions.find(opt => opt.value === form.status)
     return option ? option.label : ''
 })
 
 const selectType = (type: 'ontrack' | 'inprogress' | 'review') => {
-    form.type = type
+    form.status = type
     typeDropdown.value?.close()
 }
 
 const form = reactive<CreateProjectForm>({
     heading: '',
     description: '',
-    type: 'ontrack',
+    status: 'ontrack',
     procent: 0,
     timeToEnd: '',
     createdAt: new Date().toISOString(),
@@ -131,7 +131,7 @@ const form = reactive<CreateProjectForm>({
 const rules = {
     heading: { required, minLength: minLength(3), maxLength: maxLength(100) },
     description: { required, minLength: minLength(3), maxLength: maxLength(1000) },
-    type: { required },
+    status: { required },
     procent: { required, minValue: minValue(0), maxValue: maxValue(100) },
     timeToEnd: { required },
 }

@@ -20,6 +20,7 @@ const content = computed(() => {
     importance: task.importance,
     heading: task.heading,
     timeToEnd: task.timeToEnd,
+    isDone: task.isDone,
   }))
 })
 </script>

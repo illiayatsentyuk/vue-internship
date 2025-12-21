@@ -2,7 +2,7 @@
   .dashboard-active-project
     .dashboard-active-project__heading
       h1.dashboard-active-project__heading-title {{ heading }}
-      span.dashboard-active-project__heading-badge(:class="`dashboard-active-project__heading-badge--${type}`") {{ type === 'ontrack' ? 'On Track' : type === 'inprogress' ? 'In Progress' : 'Review' }}
+      span.dashboard-active-project__heading-badge(:class="`dashboard-active-project__heading-badge--${status}`") {{ status === 'ontrack' ? 'On Track' : status === 'inprogress' ? 'In Progress' : 'Review' }}
     span.dashboard-active-project__description {{ description }}
     .dashboard-active-project__progress
       span.dashboard-active-project__progress-header
@@ -10,7 +10,7 @@
         p.dashboard-active-project__progress-value
           strong {{ procent }}%
       .dashboard-active-project__progress-bar-container
-        .dashboard-active-project__progress-bar(:class="`dashboard-active-project__progress-bar--${type}`")
+        .dashboard-active-project__progress-bar(:class="`dashboard-active-project__progress-bar--${status}`" :style="{ width: procent ? `${procent}%` : '0%' }")
     span.dashboard-active-project__ending {{ timeToEnd }}
 </template>
 
@@ -19,7 +19,7 @@ import type { DashboardActiveProject } from '@/types'
 const props = defineProps<{
   activeProject: DashboardActiveProject
 }>()
-const { type, description, heading, procent, timeToEnd } = props.activeProject
+const { status, description, heading, procent, timeToEnd } = props.activeProject
 </script>
 
 <style lang="scss" scoped>
@@ -115,17 +115,17 @@ const { type, description, heading, procent, timeToEnd } = props.activeProject
 }
 
 .dashboard-active-project__progress-bar--review {
-  width: 90%;
+  width: 0%;
   background-color: #eab308;
 }
 
 .dashboard-active-project__progress-bar--inprogress {
-  width: 75%;
+  width: 0%;
   background-color: #4f46e5;
 }
 
 .dashboard-active-project__progress-bar--ontrack {
-  width: 60%;
+  width: 0%;
   background-color: #22c55e;
 }
 

@@ -9,7 +9,7 @@ const dashboardRoutes: RouteRecordRaw[] = [
   {
     path: '/settings',
     name: 'settings',
-    component: () => import('@/views/Dashboard/SettingView.vue'),
+    component: () => import('@/views/Setting/SettingView.vue'),
   },
   {
     path: '/profile',

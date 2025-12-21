@@ -52,7 +52,7 @@ const availableUsers = usersStore.users
 const form = reactive<CreateProjectForm>({
     heading: project.heading,
     description: project.description,
-    type: project.type,
+    status: project.status,
     procent: project.procent,
     timeToEnd: project.timeToEnd,
     createdAt: new Date().toISOString(),

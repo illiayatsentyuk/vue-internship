@@ -113,6 +113,15 @@
               )
               span.edit-task-form__error-message(v-if="v$.timeToEnd.$error")
                   | Deadline is required.
+          .edit-task-form__form-group
+              label.edit-task-form__label(for="isDone") Task Status
+              .edit-task-form__checkbox-wrapper
+                  input.edit-task-form__checkbox(
+                      type="checkbox"
+                      id="isDone"
+                      v-model="form.isDone"
+                  )
+                  label.edit-task-form__checkbox-label(for="isDone") Mark as completed
           button.edit-task-form__submit-button(type="submit") Edit
 
 </template>
@@ -191,6 +200,7 @@ const form = reactive<CreateTaskForm>({
   updatedAt: task.updatedAt,
   attachments: task.attachments,
   comments: task.comments,
+  isDone: task.isDone,
 })
 const v$ = useVuelidate(rules, form)
 
@@ -413,6 +423,40 @@ const handleEditTask = async () => {
     margin-left: 2px;
     border: 1px solid #e5e7eb;
     vertical-align: middle;
+  }
+  
+  .edit-task-form__checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  
+    &:hover {
+      background-color: #f3f4f6;
+      border-color: #d1d5db;
+    }
+  }
+  
+  .edit-task-form__checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #6366f1;
+    flex-shrink: 0;
+  }
+  
+  .edit-task-form__checkbox-label {
+    font-size: 14px;
+    font-weight: 400;
+    color: #374151;
+    cursor: pointer;
+    margin: 0;
+    user-select: none;
   }
   
   .edit-task-form__submit-button {

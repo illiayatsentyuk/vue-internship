@@ -1,6 +1,6 @@
 export interface DashboardActiveProject {
   id: number
-  type: 'ontrack' | 'inprogress' | 'review'
+  status: 'ontrack' | 'inprogress' | 'review'
   description: string
   heading: string
   procent: number
