@@ -17,6 +17,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useUsersStore } from '@/stores/users'
+import CropperModal from '@/components/Profile/CropperModal.vue'
 const usersStore = useUsersStore()
 const currentUser = computed(() => usersStore.getUserById(1))
 </script>
