@@ -21,6 +21,7 @@ const content = computed(() => {
     heading: task.heading,
     timeToEnd: task.timeToEnd,
     isDone: task.isDone,
+    procent: task.procent,
   }))
 })
 </script>

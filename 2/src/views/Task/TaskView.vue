@@ -4,19 +4,25 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useTasksStore } from '@/stores/tasks'
 import TaskComponent from '@/components/Tasks/TaskComponent.vue'
 const tasksStore = useTasksStore()
 const route = useRoute()
 const router = useRouter()
-const task = tasksStore.getTaskById(Number(route.params.id))
-if (!task) {
+const task = computed(() => tasksStore.getTaskById(Number(route.params.id)))
+if (!task.value) {
   router.push('/tasks')
 }
 
-const handleAddComment = (comment: string, id: number) => {
+const isAddingComment = ref(false)
+const handleAddComment = async (comment: string, id: number) => {
+  if (isAddingComment.value) return
+  isAddingComment.value = true
   tasksStore.addCommentToTask(id, comment)
+  await nextTick()
+  isAddingComment.value = false
 }
 </script>
 

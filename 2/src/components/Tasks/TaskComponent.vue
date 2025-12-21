@@ -34,9 +34,9 @@
             span.task-component__heading-progress-header
                 p.task-component__heading-progress-label Progress
                 p.task-component__heading-progress-value 
-                    strong {{ procent }}%
+                    strong {{ task.procent }}%
             .task-component__progress
-                .task-component__progress-bar.task-component__progress-bar--procent(:style="{ width: procent ? `${procent}%` : '0%' }")
+                .task-component__progress-bar.task-component__progress-bar--procent(:style="{ width: task.procent ? `${task.procent}%` : '0%' }")
     section.task-component__description
         h2.task-component__description-title Description
         p.task-component__description-text {{ description }}
@@ -64,7 +64,7 @@
                     span.task-component__additional-tasks-error-message(v-if="v$AdditionalTask.heading.$error") {{ v$AdditionalTask.heading.$errors[0].$message }}
                 button.task-component__additional-tasks-submit-button(type="submit") Add Additional Task
         .task-component__additional-tasks-list
-            .task-component__additional-tasks-item(v-for="additionalTask in additionalTasks" :key="additionalTask.id")
+            .task-component__additional-tasks-item(v-for="additionalTask in task.additionalTasks" :key="additionalTask.id")
                 .task-component__additional-tasks-item-info
                     span.task-component__additional-tasks-item-content
                         p.task-component__additional-tasks-item-name {{ additionalTask.heading }}
@@ -78,6 +78,7 @@
                                 @change="handleEditAdditionalTask(additionalTask.id)"
                             )
                             span.task-component__additional-tasks-item-checkbox-label Done
+                button.task-component__additional-tasks-item-button(@click="handleDeleteAdditionalTask(additionalTask.id)") Delete
     section.task-component__comments
         h2.task-component__comments-title Comments
         .task-component__comments-input
@@ -125,7 +126,6 @@ const v$AdditionalTask = useVuelidate(additionalTaskRules, additionalTaskForm)
 
 const props = defineProps<{
   task: TaskComponentType
-  addComment: (comment: string, id: number) => void
 }>()
 const emit = defineEmits(['addComment'])
 const { heading, importance, timeToEnd, assignedTo, status, description, attachments, comments, id, tags, isDone, additionalTasks, procent } = props.task
@@ -145,7 +145,7 @@ const handleEditTask = () => {
   router.push(`/tasks/${id}/edit`)
 }
 const handleEditAdditionalTask = (additionalTaskId: number, updates?: Partial<{ isDone: boolean }>) => {
-  const additionalTask = additionalTasks.find((task) => task.id === additionalTaskId)
+  const additionalTask = props.task.additionalTasks.find((task) => task.id === additionalTaskId)
   if (additionalTask) {
     const updatedTask = {
       ...additionalTask,
@@ -734,6 +734,17 @@ const handleAddAdditionalTask = async () => {
   &:hover {
     background: #4338ca;
   }
+}
+
+.task-component__additional-tasks-item-button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #4f46e5;
+  color: #ffffff;
+}
+
+.task-component__additional-tasks-item-button:hover {
+  background: #4338ca;
 }
 
 .task-component__comments {

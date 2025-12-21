@@ -1,10 +1,10 @@
 <template lang="pug">
-    .tasks-component(:class="`tasks-component--importance-${importance}`")
+    .tasks-component(:class="`tasks-component--importance-${importance}`" @click="$router.push(`/tasks/${id}`)")
       .tasks-component__heading
         h1.tasks-component__heading-title {{ heading }}
         span.tasks-component__heading-badge(:class="`tasks-component__heading-badge--importance-${importance}`") {{ importanceLabel }}
       .tasks-component__progress
-        .tasks-component__progress-bar(:class="`tasks-component__progress-bar--importance-${importance}`" :style="{ width: isDone ? '100%' : '0%' }")
+        .tasks-component__progress-bar(:class="`tasks-component__progress-bar--importance-${importance}`" :style="{ width: isDone ? '100%' : procent ? `${procent}%` : '0%' }")
       .tasks-component__time
         img.tasks-component__time-icon(src="@/assets/dashboard/timer-icon.svg" alt="timer-icon")
         p.tasks-component__time-text {{ timeToEnd }}
@@ -15,7 +15,7 @@ import type { TaskComponent as TaskComponentType } from '@/types'
 const props = defineProps<{
   task: TaskComponentType
 }>()
-const { importance, heading, timeToEnd, isDone } = props.task
+const { importance, heading, timeToEnd, isDone, procent, id } = props.task
 const items = ['Low', 'Medium', 'High', 'Critical']
 console.log(props.task)
 const importanceLabel = computed(() => {
@@ -44,6 +44,7 @@ const importanceLabel = computed(() => {
   padding: 16px 20px;
   width: 90%;
   box-shadow: 0px 1px 2px 0px #0000000d;
+  cursor: pointer;
 }
 
 .tasks-component--importance-critical {

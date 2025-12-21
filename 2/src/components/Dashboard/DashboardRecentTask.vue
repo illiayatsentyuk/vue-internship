@@ -1,10 +1,10 @@
 <template lang="pug">
-  .dashboard-recent-task(:class="`dashboard-recent-task--importance-${importance}`")
+  .dashboard-recent-task(:class="`dashboard-recent-task--importance-${importance}`" @click="$router.push(`/tasks/${id}`)")
     .dashboard-recent-task__heading
       h1.dashboard-recent-task__heading-title {{ heading }}
       span.dashboard-recent-task__heading-badge(:class="`dashboard-recent-task__heading-badge--importance-${importance}`") {{ importanceLabel }}
     .dashboard-recent-task__progress
-      .dashboard-recent-task__progress-bar(:class="`dashboard-recent-task__progress-bar--importance-${importance}`" :style="{ width: isDone ? '100%' : '0%' }")
+      .dashboard-recent-task__progress-bar(:class="`dashboard-recent-task__progress-bar--importance-${importance}`" :style="{ width: isDone ? '100%' : procent ? `${procent}%` : '0%' }")
     .dashboard-recent-task__time
       img.dashboard-recent-task__time-icon(src="@/assets/dashboard/timer-icon.svg" alt="timer-icon")
       p.dashboard-recent-task__time-text {{ timeToEnd }}
@@ -16,7 +16,7 @@ import type { Task } from '@/types'
 const props = defineProps<{
   task: Task
 }>()
-const { importance, heading, timeToEnd, isDone } = props.task
+const { importance, heading, timeToEnd, isDone, procent, id } = props.task
 
 const importanceLabel = computed(() => {
   switch (importance) {
@@ -44,6 +44,7 @@ const importanceLabel = computed(() => {
   padding: 16px 20px;
   width: 90%;
   box-shadow: 0px 1px 2px 0px #0000000d;
+  cursor: pointer;
 }
 
 .dashboard-recent-task--importance-critical {
