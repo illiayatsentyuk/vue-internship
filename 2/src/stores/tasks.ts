@@ -17,48 +17,6 @@ if (!availableUsers) {
 
 export const useTasksStore = defineStore('tasks', () => {
   const tasks = ref<TaskComponent[]>([
-    // {
-    //   id: 1,
-    //   heading: 'Task 1',
-    //   description: 'Description 1',
-    //   timeToEnd: '10:00',
-    //   importance: 'High',
-    //   status: 'Pending',
-    //   tags: [
-    //     {
-    //       id: 1,
-    //       name: 'Tag 1',
-    //       color: '#FF0000',
-    //     },
-    //   ],
-    //   project: 'Project 1',
-    //   assignedTo: [availableUsers[0]],
-    //   createdAt: '2021-01-01',
-    //   updatedAt: '2021-01-01',
-    //   attachments: ['Penos1 1', 'Attachment 2'],
-    //   comments: ['Comment 1', 'Comment 2'],
-    // },
-    // {
-    //   id: 2,
-    //   heading: 'Task 2',
-    //   description: 'Description 2(penos sasoahahahah)',
-    //   timeToEnd: '10:00',
-    //   importance: 'High',
-    //   status: 'Pending',
-    //   tags: [
-    //     {
-    //       id: 1,
-    //       name: 'Tag 1',
-    //       color: '#FF0000',
-    //     },
-    //   ],
-    //   project: availableProjects[0],
-    //   assignedTo: [availableUsers[0]],
-    //   createdAt: '2021-01-01',
-    //   updatedAt: '2021-01-01',
-    //   attachments: ['Attachment 1', 'Attachment 2'],
-    //   comments: ['Comment 1', 'Comment 2'],
-    // },
   ])
   function editTask(task: Omit<TaskComponent, 'id'>, id: number) {
     tasks.value = tasks.value.map((element) => (element.id === id ? { ...task, id } : element))

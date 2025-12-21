@@ -1,5 +1,5 @@
 export interface Task {
-  importance: string
+  importance: 'low' | 'medium' | 'high' | 'critical'
   heading: string
   timeToEnd: string
 }

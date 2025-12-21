@@ -178,7 +178,7 @@ const form = reactive<CreateTaskForm>({
     heading: '',
     description: '',
     timeToEnd: '',
-    importance: '',
+    importance: 'low',
     status: 'Pending',
     tags: [],
     project: null,
@@ -196,7 +196,7 @@ const selectedImportanceName = computed(() => {
 })
 
 const selectImportance = (importance: { id: number; name: string; color: string }) => {
-    form.importance = String(importance.id)
+    form.importance = importance.name.toLowerCase() as 'low' | 'medium' | 'high' | 'critical'
     importanceDropdown.value?.close()
     v$.value.importance.$touch()
 }

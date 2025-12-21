@@ -4,7 +4,7 @@ export interface CreateTaskForm {
   heading: string
   description: string
   timeToEnd: string
-  importance: string
+  importance: 'low' | 'medium' | 'high' | 'critical'
   status: string
   tags: Tag[]
   project: Project | null

@@ -17,6 +17,7 @@ const props = defineProps<{
 }>()
 const { importance, heading, timeToEnd } = props.task
 const items = ['Low', 'Medium', 'High', 'Critical']
+console.log(props.task)
 const importanceLabel = computed(() => {
   switch (importance) {
     case 'low':
