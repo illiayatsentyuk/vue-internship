@@ -9,9 +9,10 @@
 <script setup lang="ts">
 import ProjectsComponent from '@/components/Project/ProjectsComponent.vue'
 import { useProjectsStore } from '@/stores/projects'
+import { computed } from 'vue'
+
 const projectsStore = useProjectsStore()
-const projects = projectsStore.projects
-console.log(projects)
+const projects = computed(() => projectsStore.projects)
 </script>
 
 <style lang="scss" scoped>

@@ -1,13 +1,18 @@
 <template lang="pug">
-    AccordionElement(:items="[project]")
+    AccordionElement(:items="[props.project]" @deleteProject="deleteProject")
 </template>
 <script setup lang="ts">
+import { useProjectsStore } from '@/stores/projects'
 import type { Project as ProjectType } from '@/types'
 import AccordionElement from '@/ui/Accordion/AccordionElement.vue'
+
+const projectsStore = useProjectsStore()
 const props = defineProps<{
   project: ProjectType
 }>()
-const { project } = props
+const deleteProject = (id: number) => {
+  projectsStore.deleteProject(id)
+}
 </script>
 
 <style lang="scss" scoped>

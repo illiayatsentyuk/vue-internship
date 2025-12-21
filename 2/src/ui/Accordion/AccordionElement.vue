@@ -8,15 +8,20 @@
           div.accordion-element__links
             RouterLink.accordion-element__link(:to="`/projects/${item.id}`") View Project
             RouterLink.accordion-element__link(:to="`/projects/${item.id}/edit`") Edit Project
-            RouterLink.accordion-element__link(:to="`/projects/${item.id}/delete`") Delete Project
+            button.accordion-element__link(@click="deleteProject(item.id)") Delete Project
 </template>
 <script setup lang="ts">
 import AccordionItem from '@/ui/Accordion/AccordionItem.vue'
 import type { Project } from '@/types'
+
+const emit = defineEmits(['deleteProject'])
 const props = defineProps<{
   items: Project[]
 }>()
 const { items } = props
+const deleteProject = (id: number) => {
+  emit('deleteProject', id)
+}
 </script>
 <style lang="scss" scoped>
 .accordion-element {

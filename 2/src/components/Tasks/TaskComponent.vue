@@ -51,26 +51,26 @@
                         p.task-component__attachments-item-size 2.2mb
                 img.task-component__attachments-item-download(src="@/assets/task/download-icon.svg" alt="download-icon")
     section.task-component__additional-tasks
-        h2.task-component__additional-tasks-title Additional Tasks
+        h2.task-component__additional-tasks-title Subtasks
         .task-component__additional-tasks-input
             form.task-component__additional-tasks-form(@submit.prevent="handleAddAdditionalTask")
                 .task-component__additional-tasks-input-wrapper
                     input.task-component__additional-tasks-input-field(
                         type="text" 
-                        placeholder="Enter additional task heading" 
+                        placeholder="Enter subtask heading" 
                         v-model="additionalTaskForm.heading" 
                         :class="{ 'task-component__additional-tasks-input-field--error': v$AdditionalTask.heading.$error }"
                     )
                     span.task-component__additional-tasks-error-message(v-if="v$AdditionalTask.heading.$error") {{ v$AdditionalTask.heading.$errors[0].$message }}
-                button.task-component__additional-tasks-submit-button(type="submit") Add Additional Task
+                button.task-component__additional-tasks-submit-button(type="submit") Add Subtask
         .task-component__additional-tasks-list
             .task-component__additional-tasks-item(v-for="additionalTask in task.additionalTasks" :key="additionalTask.id")
                 .task-component__additional-tasks-item-info
                     span.task-component__additional-tasks-item-content
                         p.task-component__additional-tasks-item-name {{ additionalTask.heading }}
                         p.task-component__additional-tasks-item-description {{ additionalTask.description }}
-                        p.task-component__additional-tasks-item-created-at {{ additionalTask.createdAt }}
-                        p.task-component__additional-tasks-item-updated-at {{ additionalTask.updatedAt }}
+                        p.task-component__additional-tasks-item-created-at Created at: {{ additionalTask.createdAt.toLocaleDateString() }}
+                        p.task-component__additional-tasks-item-updated-at Updated at: {{ additionalTask.updatedAt.toLocaleDateString() }}
                         label.task-component__additional-tasks-item-checkbox
                             input.task-component__additional-tasks-item-checkbox-input(
                                 type="checkbox" 

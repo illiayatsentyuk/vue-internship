@@ -40,12 +40,17 @@ defineProps<NavBarListItem>()
   cursor: pointer;
   background: #eef2ff;
   color: #4f46e5;
+  .navbar-list-item__image {
+  filter: brightness(0) saturate(100%) invert(27%) sepia(95%) saturate(1352%) hue-rotate(230deg)
+    brightness(98%) contrast(90%);
+}
 }
 
 .navbar-list-item__link--active .navbar-list-item__item {
   cursor: pointer;
   background: #eef2ff;
   color: #4f46e5;
+  
 }
 
 .navbar-list-item__link--active .navbar-list-item__image {

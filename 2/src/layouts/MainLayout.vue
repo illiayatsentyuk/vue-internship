@@ -15,7 +15,8 @@
         .main-layout__navbar-account-description
           h1.main-layout__navbar-account-name {{ accountName }}
           p.main-layout__navbar-account-email {{ accountEmail }}
-    RouterView
+    .main-layout__content
+      RouterView
 </template>
 
 <script setup lang="ts">
@@ -81,9 +82,13 @@ const navBarSettingsItems = [
 <style lang="scss" scoped>
 .main-layout {
   display: flex;
+  flex-direction: row;
   width: 100%;
-  RouterView {
+  height: 100vh;
+  .main-layout__content {
     width: calc(100% - 256px);
+    height: 100%;
+    overflow: auto;
   }
 }
 
@@ -91,7 +96,6 @@ const navBarSettingsItems = [
   width: 256px;
   background: #ffffff;
   border-right: 1px solid #e5e7eb;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -117,6 +121,9 @@ const navBarSettingsItems = [
 }
 
 .main-layout__navbar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   list-style-type: none;
   padding: 16px 16px 0 16px;
 }
