@@ -5,13 +5,15 @@ export const useUsersStore = defineStore('users', () => {
   const users = ref<User[]>([
     {
       id: 1,
-      name: 'John Doe',
+      firstName: 'John',
+      lastName: 'Doe',
       email: 'john@doe.com',
       password: '123456',
+      avatar: '',
       tasks: [],
       projects: [],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      createdAt: '',
+      updatedAt: '',
     },
   ])
   const returnBiggestId = computed(() => {

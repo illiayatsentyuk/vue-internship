@@ -12,8 +12,8 @@
       .main-layout__navbar-account-information
         img.main-layout__navbar-account-logo(src="@/assets/layouts/account-logo.png")
         .main-layout__navbar-account-description
-          h1.main-layout__navbar-account-name John Doe
-          p.main-layout__navbar-account-email john@syntask.com
+          h1.main-layout__navbar-account-name {{ accountName }}
+          p.main-layout__navbar-account-email {{ accountEmail }}
     RouterView
 </template>
 
@@ -26,7 +26,15 @@ import projectsIcon from '@/assets/layouts/projects.svg'
 import tagsIcon from '@/assets/layouts/tags.svg'
 import settingsIcon from '@/assets/layouts/settings.svg'
 import profileIcon from '@/assets/layouts/profile.svg'
-
+import { useUsersStore } from '@/stores/users'
+import { computed } from 'vue'
+const usersStore = useUsersStore()
+const currentUser = computed(() => usersStore.getUserById(1))
+if (!currentUser.value) {
+  throw new Error('User not found')
+}
+const accountName = computed(() => `${currentUser.value!.firstName} ${currentUser.value!.lastName}`)
+const accountEmail = computed(() => currentUser.value!.email)
 const navBarTabsItems = [
   {
     id: 1,
