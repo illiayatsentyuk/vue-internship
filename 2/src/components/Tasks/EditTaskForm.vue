@@ -195,7 +195,7 @@ const form = reactive<CreateTaskForm>({
 const v$ = useVuelidate(rules, form)
 
 const selectedImportanceName = computed(() => {
-    const importance = importanceOfProject.find(imp => String(imp.id) === form.importance)
+    const importance = importanceOfProject.find(imp => imp.name.toLowerCase() === form.importance)
     return importance ? importance.name : ''
 })
 

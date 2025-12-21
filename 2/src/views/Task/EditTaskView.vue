@@ -27,7 +27,7 @@ const handleEditTask = (task: TaskComponent) => {
 <style lang="scss" scoped>
 .edit-task-view {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   padding: 32px 96px;
   background: #F9FAFB;
 }
