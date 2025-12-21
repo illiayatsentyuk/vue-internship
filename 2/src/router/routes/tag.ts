@@ -19,5 +19,3 @@ const tagRoutes: RouteRecordRaw[] = [
 ]
 
 export default tagRoutes
-
-

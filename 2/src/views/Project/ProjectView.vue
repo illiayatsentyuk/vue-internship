@@ -40,7 +40,6 @@ const project = projectsStore.getProjectById(Number(projectId))
 if (!project) {
   router.push('/projects')
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -110,18 +109,6 @@ if (!project) {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
-  }
-
-  @media (max-width: 768px) {
-    padding: 20px 16px;
-
-    &__card {
-      padding: 20px 18px;
-    }
-
-    &__grid {
-      grid-template-columns: 1fr;
-    }
   }
 }
 </style>

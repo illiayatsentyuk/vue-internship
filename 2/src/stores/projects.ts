@@ -50,7 +50,9 @@ export const useProjectsStore = defineStore('projects', () => {
   function editProject(project: Omit<Project, 'id'>, id: number) {
     const updatedProject: Project = { ...project, id, procent: 0 }
     updatedProject.procent = calculateProcent(updatedProject)
-    projects.value = projects.value.map((element: Project) => (element.id === id ? updatedProject : element))
+    projects.value = projects.value.map((element: Project) =>
+      element.id === id ? updatedProject : element,
+    )
   }
   function deleteProject(id: number) {
     projects.value = projects.value.filter((element: Project) => element.id !== id)
@@ -59,7 +61,6 @@ export const useProjectsStore = defineStore('projects', () => {
     return projects.value.find((element: Project) => element.id === id)
   }
 
-  // Sync user updates to project contributors
   watch(
     () => usersStore.users,
     (newUsers) => {
@@ -70,7 +71,7 @@ export const useProjectsStore = defineStore('projects', () => {
         })
       })
     },
-    { deep: true }
+    { deep: true },
   )
 
   return { projects, addProject, editProject, deleteProject, getProjectById, updateProjectsProcent }

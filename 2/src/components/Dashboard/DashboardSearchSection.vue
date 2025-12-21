@@ -43,10 +43,6 @@ const dropdownContent = [
   border-radius: 8px;
 }
 
-.dashboard-search-section__input-icon {
-  // Icon styles
-}
-
 .dashboard-search-section__input-field {
   border: none;
   border-radius: 8px;

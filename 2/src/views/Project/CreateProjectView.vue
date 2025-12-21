@@ -12,16 +12,16 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const projectsStore = useProjectsStore()
 const handleCreateProject = (project: CreateProjectFormType) => {
-    projectsStore.addProject({ ...project, contributors: project.contributors || [] })
-    router.push('/projects')
+  projectsStore.addProject({ ...project, contributors: project.contributors || [] })
+  router.push('/projects')
 }
 </script>
 <style lang="scss" scoped>
 .create-project-view {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   padding: 32px 96px;
-  background: #F9FAFB;
+  background: #f9fafb;
 }
 
 .create-project-view__title {

@@ -163,8 +163,8 @@ const handleCreateTag = async () => {
   gap: 8px;
   box-shadow: 0 4px 8px rgba(99, 102, 241, 0.05);
   transition:
-    transform 0.09s cubic-bezier(.53,.02,.63,1.52),
-    box-shadow 0.13s cubic-bezier(.25,.45,.3,1.45),
+    transform 0.09s cubic-bezier(0.53, 0.02, 0.63, 1.52),
+    box-shadow 0.13s cubic-bezier(0.25, 0.45, 0.3, 1.45),
     opacity 0.16s;
 
   &:hover {
@@ -185,5 +185,3 @@ const handleCreateTag = async () => {
   }
 }
 </style>
-
-

@@ -26,8 +26,4 @@ const { content } = props.dropdown
 .dashboard-search-dropdown__content {
   margin: 0;
 }
-
-.dashboard-search-dropdown__arrow {
-  // Arrow icon styles
-}
 </style>

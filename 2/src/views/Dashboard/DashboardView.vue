@@ -40,6 +40,7 @@ const DASHBOARD_HEADING_CONTROLLS_BUTTONS = [
   display: none;
   width: 100%;
   background: #f9fafb;
+  height: 100%;
 }
 
 .dashboard-view--active {

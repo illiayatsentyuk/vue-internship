@@ -31,7 +31,9 @@ defineProps<NavBarListItem>()
   font-size: 16px;
   line-height: 100%;
   border-radius: 8px;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .navbar-list-item__link:hover .navbar-list-item__item {
@@ -53,9 +55,5 @@ defineProps<NavBarListItem>()
 
 .navbar-list-item__content {
   margin-bottom: 0;
-}
-
-.navbar-list-item__image {
-  // Image styles
 }
 </style>

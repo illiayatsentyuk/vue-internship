@@ -14,11 +14,11 @@ if (!availableUsers) {
 export const useTasksStore = defineStore('tasks', () => {
   const tasks = ref<TaskComponent[]>([])
   const projectsStore = useProjectsStore()
-  
+
   function editTask(task: Omit<TaskComponent, 'id'>, id: number) {
     const updatedTask = { ...task, id }
     tasks.value = tasks.value.map((element) => (element.id === id ? updatedTask : element))
-    
+
     const projects = projectsStore.projects
     const project = projects.find((p: Project) => p.tasks.some((t: TaskComponent) => t.id === id))
     if (project) {
@@ -26,10 +26,10 @@ export const useTasksStore = defineStore('tasks', () => {
       projectsStore.updateProjectsProcent()
     }
   }
-  
+
   function deleteTask(id: number) {
     tasks.value = tasks.value.filter((element) => element.id !== id)
-    
+
     const projects = projectsStore.projects
     const project = projects.find((p: Project) => p.tasks.some((t: TaskComponent) => t.id === id))
     if (project) {
@@ -37,11 +37,11 @@ export const useTasksStore = defineStore('tasks', () => {
       projectsStore.updateProjectsProcent()
     }
   }
-  
+
   function addTask(task: Omit<TaskComponent, 'id'>) {
     const newTask = { ...task, id: returnBiggestId.value + 1 }
     tasks.value.push(newTask)
-    
+
     const projects = projectsStore.projects
     const project = projects.find((p: Project) => p.id === task.project.id)
     if (project) {
@@ -58,9 +58,11 @@ export const useTasksStore = defineStore('tasks', () => {
     const task = tasks.value.find((element) => element.id === taskId)
     if (task) {
       task.comments.push(content)
-      
+
       const projects = projectsStore.projects
-      const project = projects.find((p: Project) => p.tasks.some((t: TaskComponent) => t.id === taskId))
+      const project = projects.find((p: Project) =>
+        p.tasks.some((t: TaskComponent) => t.id === taskId),
+      )
       if (project) {
         const projectTask = project.tasks.find((t: TaskComponent) => t.id === taskId)
         if (projectTask) {
@@ -72,14 +74,18 @@ export const useTasksStore = defineStore('tasks', () => {
   function editAdditionalTask(taskId: number, additionalTask: AdditionalTask) {
     const task = tasks.value.find((element) => element.id === taskId)
     if (task) {
-      task.additionalTasks = task.additionalTasks.map((element) => (element.id === additionalTask.id ? additionalTask : element))
+      task.additionalTasks = task.additionalTasks.map((element) =>
+        element.id === additionalTask.id ? additionalTask : element,
+      )
       updateTasksProcent()
     }
   }
   function deleteAdditionalTask(taskId: number, additionalTaskId: number) {
     const task = tasks.value.find((element) => element.id === taskId)
     if (task) {
-      task.additionalTasks = task.additionalTasks.filter((element) => element.id !== additionalTaskId)
+      task.additionalTasks = task.additionalTasks.filter(
+        (element) => element.id !== additionalTaskId,
+      )
       updateTasksProcent()
     }
   }
@@ -90,7 +96,7 @@ export const useTasksStore = defineStore('tasks', () => {
       updateTasksProcent()
     }
   }
-  
+
   const calculateProcent = (task: TaskComponent): number => {
     const totalAdditionalTasks = task.additionalTasks.length
     if (totalAdditionalTasks === 0) return 0
@@ -108,12 +114,31 @@ export const useTasksStore = defineStore('tasks', () => {
   }
 
   const returnBiggestAdditionalTaskId = computed(() => {
-    return tasks.value.reduce((max, task) => Math.max(max, task.additionalTasks.reduce((max, additionalTask) => Math.max(max, additionalTask.id), 0)), 0)
+    return tasks.value.reduce(
+      (max, task) =>
+        Math.max(
+          max,
+          task.additionalTasks.reduce((max, additionalTask) => Math.max(max, additionalTask.id), 0),
+        ),
+      0,
+    )
   })
 
   const returnBiggestId = computed(() => {
     return tasks.value.reduce((max, task) => Math.max(max, task.id), 0)
   })
 
-  return { tasks, editTask, deleteTask, addTask, getTaskById, addCommentToTask, returnBiggestId, editAdditionalTask, deleteAdditionalTask, addAdditionalTask, updateTasksProcent }
+  return {
+    tasks,
+    editTask,
+    deleteTask,
+    addTask,
+    getTaskById,
+    addCommentToTask,
+    returnBiggestId,
+    editAdditionalTask,
+    deleteAdditionalTask,
+    addAdditionalTask,
+    updateTasksProcent,
+  }
 })

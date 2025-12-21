@@ -1,5 +1,5 @@
 <template lang="pug">
-  .dashboard-active-project
+  .dashboard-active-project(@click="$router.push(`/projects/${id}`)")
     .dashboard-active-project__heading
       h1.dashboard-active-project__heading-title {{ heading }}
       span.dashboard-active-project__heading-badge(:class="`dashboard-active-project__heading-badge--${status}`") {{ status === 'ontrack' ? 'On Track' : status === 'inprogress' ? 'In Progress' : 'Review' }}
@@ -19,7 +19,7 @@ import type { DashboardActiveProject } from '@/types'
 const props = defineProps<{
   activeProject: DashboardActiveProject
 }>()
-const { status, description, heading, procent, timeToEnd } = props.activeProject
+const { id, status, description, heading, procent, timeToEnd } = props.activeProject
 </script>
 
 <style lang="scss" scoped>
@@ -29,6 +29,7 @@ const { status, description, heading, procent, timeToEnd } = props.activeProject
   flex-direction: column;
   padding: 24px;
   background: #ffffff;
+  cursor: pointer;
 }
 
 .dashboard-active-project__heading {

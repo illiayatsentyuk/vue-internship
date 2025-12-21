@@ -64,7 +64,9 @@ const currentUser = computed(() => usersStore.getUserById(1))
 if (!currentUser.value) {
   throw new Error('User not found')
 }
-const personalInformation = reactive<Omit<User, 'id' | 'password' | 'tasks' | 'projects' | 'createdAt' | 'updatedAt'>>({
+const personalInformation = reactive<
+  Omit<User, 'id' | 'password' | 'tasks' | 'projects' | 'createdAt' | 'updatedAt'>
+>({
   firstName: currentUser.value.firstName,
   lastName: currentUser.value.lastName,
   email: currentUser.value.email,
@@ -122,7 +124,9 @@ const v$ = useVuelidate(rules, personalInformation)
   border: 1px solid #e5e7eb;
   font-size: 14px;
   color: #111827;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 
   &:focus {
     outline: none;
@@ -136,7 +140,7 @@ const v$ = useVuelidate(rules, personalInformation)
 
   &--error {
     border-color: #ef4444;
-    
+
     &:focus {
       border-color: #ef4444;
       box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
@@ -207,4 +211,3 @@ const v$ = useVuelidate(rules, personalInformation)
   }
 }
 </style>
-

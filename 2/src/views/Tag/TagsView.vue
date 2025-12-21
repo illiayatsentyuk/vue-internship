@@ -29,8 +29,6 @@ const tagsStore = useTagsStore()
 const { tags } = storeToRefs(tagsStore)
 
 const handleDelete = (id: number) => {
-  // basic confirm to avoid accidental deletes
-   
   if (confirm('Are you sure you want to delete this tag?')) {
     tagsStore.deleteTag(id)
   }
@@ -77,19 +75,14 @@ const handleDelete = (id: number) => {
     gap: 6px;
     box-shadow: 0 4px 8px rgba(99, 102, 241, 0.08);
     transition:
-      transform 0.09s cubic-bezier(.53,.02,.63,1.52),
-      box-shadow 0.13s cubic-bezier(.25,.45,.3,1.45),
+      transform 0.09s cubic-bezier(0.53, 0.02, 0.63, 1.52),
+      box-shadow 0.13s cubic-bezier(0.25, 0.45, 0.3, 1.45),
       opacity 0.16s;
 
     &:hover {
       transform: translateY(-1px) scale(1.03);
       box-shadow: 0 12px 30px rgba(79, 70, 229, 0.22);
       opacity: 0.97;
-    }
-
-    &:active {
-      transform: translateY(0) scale(0.98);
-      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.18);
     }
   }
 
@@ -179,16 +172,6 @@ const handleDelete = (id: number) => {
     border: none;
     background-color: #fee2e2;
     cursor: pointer;
-  }
-
-  @media (max-width: 768px) {
-    padding: 24px 16px;
-
-    &__item {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
-    }
   }
 }
 </style>

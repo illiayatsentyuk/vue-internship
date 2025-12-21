@@ -81,13 +81,13 @@ const navBarSettingsItems = [
 <style lang="scss" scoped>
 .main-layout {
   display: flex;
-  margin-left: 256px;
+  width: 100%;
+  RouterView {
+    width: calc(100% - 256px);
+  }
 }
 
 .main-layout__navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 256px;
   background: #ffffff;
   border-right: 1px solid #e5e7eb;
@@ -95,11 +95,9 @@ const navBarSettingsItems = [
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0px 10px 15px 0px #0000001a, 0px 4px 6px 0px #0000001a;
-}
-
-.main-layout__navbar-controlls {
-  // Container for logo and list
+  box-shadow:
+    0px 10px 15px 0px #0000001a,
+    0px 4px 6px 0px #0000001a;
 }
 
 .main-layout__navbar-logo {
@@ -108,10 +106,6 @@ const navBarSettingsItems = [
   gap: 12px;
   border-bottom: 1px solid #e5e7eb;
   padding: 26px 0 26px 26px;
-}
-
-.main-layout__navbar-logo-image {
-  // Logo image styles
 }
 
 .main-layout__navbar-logo-heading {
@@ -145,10 +139,6 @@ const navBarSettingsItems = [
   border-radius: 9999px;
   width: 40px;
   height: 40px;
-}
-
-.main-layout__navbar-account-description {
-  // Account description container
 }
 
 .main-layout__navbar-account-name {

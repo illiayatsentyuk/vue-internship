@@ -126,7 +126,7 @@
 
 </template>
 
-<script setup lang="ts">     
+<script setup lang="ts">
 import { reactive, ref, computed, watch } from 'vue'
 import type { CreateTaskForm, TaskComponent, Project } from '@/types'
 import { useTagsStore } from '@/stores/tags'
@@ -144,36 +144,48 @@ const projectsStore = useProjectsStore()
 const availableProjects = projectsStore.projects
 console.log(availableProjects)
 
-const importanceDropdown = ref<InstanceType<typeof Dropdown> & { isOpen?: { value: boolean } } | null>(null)
-const projectDropdown = ref<InstanceType<typeof Dropdown> & { isOpen?: { value: boolean } } | null>(null)
+const importanceDropdown = ref<
+  (InstanceType<typeof Dropdown> & { isOpen?: { value: boolean } }) | null
+>(null)
+const projectDropdown = ref<
+  (InstanceType<typeof Dropdown> & { isOpen?: { value: boolean } }) | null
+>(null)
 const importanceDropdownWasOpened = ref(false)
 
-const importanceOfProject = [{
-  id: 1,
-  name: 'Low',
-  color: '#FF0000',
-}, {
-  id: 2,
-  name: 'Medium',
-  color: '#00FF00',
-}, {
-  id: 3,
-  name: 'High',
-  color: '#FFFF00',
-}, {
-  id: 4,
-  name: 'Critical',
-  color: '#FF00FF',
-}]
+const importanceOfProject = [
+  {
+    id: 1,
+    name: 'Low',
+    color: '#FF0000',
+  },
+  {
+    id: 2,
+    name: 'Medium',
+    color: '#00FF00',
+  },
+  {
+    id: 3,
+    name: 'High',
+    color: '#FFFF00',
+  },
+  {
+    id: 4,
+    name: 'Critical',
+    color: '#FF00FF',
+  },
+]
 
-watch(() => importanceDropdown.value?.isOpen?.value, (isOpen) => {
-  if (isOpen) {
-    importanceDropdownWasOpened.value = true
-  } else if (importanceDropdownWasOpened.value && !form.importance) {
-    v$.value.importance.$touch()
-    importanceDropdownWasOpened.value = false
-  }
-})
+watch(
+  () => importanceDropdown.value?.isOpen?.value,
+  (isOpen) => {
+    if (isOpen) {
+      importanceDropdownWasOpened.value = true
+    } else if (importanceDropdownWasOpened.value && !form.importance) {
+      v$.value.importance.$touch()
+      importanceDropdownWasOpened.value = false
+    }
+  },
+)
 
 const rules = {
   heading: { required, minLength: minLength(3), maxLength: maxLength(100) },
@@ -207,296 +219,295 @@ const form = reactive<CreateTaskForm>({
 const v$ = useVuelidate(rules, form)
 
 const selectedImportanceName = computed(() => {
-    const importance = importanceOfProject.find(imp => imp.name.toLowerCase() === form.importance.toLowerCase())
-    return importance ? importance.name : ''
+  const importance = importanceOfProject.find(
+    (imp) => imp.name.toLowerCase() === form.importance.toLowerCase(),
+  )
+  return importance ? importance.name : ''
 })
 
 const selectImportance = (importance: { id: number; name: string; color: string }) => {
-    form.importance = importance.name.toLowerCase() as 'low' | 'medium' | 'high' | 'critical'
-    importanceDropdown.value?.close()
-    v$.value.importance.$touch()
+  form.importance = importance.name.toLowerCase() as 'low' | 'medium' | 'high' | 'critical'
+  importanceDropdown.value?.close()
+  v$.value.importance.$touch()
 }
 
 const selectedProjectName = computed(() => {
-    return form.project?.heading || ''
+  return form.project?.heading || ''
 })
 
 const selectProject = (project: Project) => {
-    form.project = project
-    projectDropdown.value?.close()
-    v$.value.project.$touch()
+  form.project = project
+  projectDropdown.value?.close()
+  v$.value.project.$touch()
 }
 
 const handleEditTask = async () => {
   const result = await v$.value.$validate()
   if (!result) {
-      return
+    return
   }
   emit('editTask', form)
 }
 </script>
 
 <style lang="scss" scoped>
-  .edit-task-form {
-    max-width: 720px;
-    margin: 48px auto;
-    padding: 32px 40px;
-    background: #fff;
-    border-radius: 12px;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
-  
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-  }
-  
-  .edit-task-form__form-group {
+.edit-task-form {
+  max-width: 720px;
+  margin: 48px auto;
+  padding: 32px 40px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+
+  form {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    margin-bottom: 4px;
-    position: relative;
+    gap: 20px;
   }
-  
-  .edit-task-form__form-group--error .edit-task-form__label {
-    color: #ef4444;
-  }
-  
-  .edit-task-form__label {
-    font-size: 14px;
-    font-weight: 600;
-    color: #374151;
-  }
-  
-  .edit-task-form__input,
-  .edit-task-form__textarea,
-  .edit-task-form__select {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid #e5e7eb;
-    background: #f9fafb;
-    font-size: 15px;
-    color: #111827;
-    transition:
-      border-color 0.15s ease,
-      box-shadow 0.15s ease,
-      background-color 0.15s ease;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-  
-    &:focus {
-      outline: none;
-      border-color: #6366f1;
-      box-shadow: 0 0 0 1px #6366f1;
-      background: #fff;
-    }
-  
-    &::placeholder {
-      color: #9ca3af;
-      font-size: 14px;
-    }
-  
-    span {
-      flex: 1;
-      text-align: left;
-    }
-  }
-  
-  .edit-task-form__select-icon {
-    width: 16px;
-    height: 16px;
-    transition: transform 0.2s ease;
-    flex-shrink: 0;
-    margin-left: 8px;
-  
-    &--open {
-      transform: rotate(180deg);
-    }
-  }
-  
-  .edit-task-form__select-options {
-    padding: 4px;
-    max-height: 200px;
-    overflow-y: auto;
-    display: block;
-    width: 100%;
-  }
-  
-  .edit-task-form__select-option {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.15s ease;
-    font-size: 14px;
-    color: #374151;
-    width: 100%;
-    box-sizing: border-box;
-  
-    &:hover {
-      background-color: #f3f4f6;
-    }
-  
-    &--selected {
-      background-color: #eef2ff;
-      color: #4f46e5;
-      font-weight: 500;
-    }
-  }
-  
-  .edit-task-form__select-option-color {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  
-  .edit-task-form__input--error,
-  .edit-task-form__textarea--error,
-  .edit-task-form__select--error {
-    border-color: #ef4444;
-    background-color: #fef2f2;
-  }
-  
-  .edit-task-form__textarea {
-    min-height: 90px;
-    resize: vertical;
-  }
-  
-  .edit-task-form__error-message {
-    font-size: 12.5px;
-    color: #ef4444;
-    font-weight: 500;
-    margin-top: 2px;
-    line-height: 1.45;
-  }
-  
-  .edit-task-form__tags-selector {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #e5e7eb;
-    background-color: #f9fafb;
-  }
-  
-  .edit-task-form__tag-option {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    cursor: pointer;
+}
+
+.edit-task-form__form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 4px;
+  position: relative;
+}
+
+.edit-task-form__form-group--error .edit-task-form__label {
+  color: #ef4444;
+}
+
+.edit-task-form__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.edit-task-form__input,
+.edit-task-form__textarea,
+.edit-task-form__select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 15px;
+  color: #111827;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 1px #6366f1;
     background: #fff;
-    border-radius: 6px;
-    padding: 5px 9px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
   }
-  
-  .edit-task-form__tag-checkbox {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    accent-color: #6366f1;
-  }
-  
-  .edit-task-form__tag-label {
-    font-size: 13.5px;
-    font-weight: 400;
-    color: #22223b;
-    cursor: pointer;
-    margin: 0;
-    padding: 0 2px 0 0;
-  }
-  
-  .edit-task-form__tag-color-circle {
-    display: inline-block;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    margin-left: 2px;
-    border: 1px solid #e5e7eb;
-    vertical-align: middle;
-  }
-  
-  .edit-task-form__checkbox-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #e5e7eb;
-    background-color: #f9fafb;
-    cursor: pointer;
-    transition: background-color 0.15s ease, border-color 0.15s ease;
-  
-    &:hover {
-      background-color: #f3f4f6;
-      border-color: #d1d5db;
-    }
-  }
-  
-  .edit-task-form__checkbox {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    accent-color: #6366f1;
-    flex-shrink: 0;
-  }
-  
-  .edit-task-form__checkbox-label {
+
+  &::placeholder {
+    color: #9ca3af;
     font-size: 14px;
-    font-weight: 400;
-    color: #374151;
-    cursor: pointer;
-    margin: 0;
-    user-select: none;
   }
-  
-  .edit-task-form__submit-button {
-    margin-top: 12px;
-    align-self: flex-start;
-    padding: 11px 26px;
-    border-radius: 9999px;
-    border: none;
-    background: linear-gradient(90deg, #4f46e5, #6366f1 70% );
-    color: #fff;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    box-shadow: 0 4px 8px rgba(99, 102, 241, 0.05);
-    transition:
-      transform 0.09s cubic-bezier(.53,.02,.63,1.52),
-      box-shadow 0.13s cubic-bezier(.25,.45,.3,1.45),
-      opacity 0.16s;
-  
-    &:hover {
-      transform: translateY(-1px) scale(1.035);
-      box-shadow: 0 12px 36px rgba(79, 70, 229, 0.18);
-      opacity: 0.96;
-    }
-  
-    &:active {
-      transform: translateY(0) scale(0.98);
-      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.17);
-    }
-  
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
+
+  span {
+    flex: 1;
+    text-align: left;
   }
-  </style>
+}
+
+.edit-task-form__select-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  margin-left: 8px;
+
+  &--open {
+    transform: rotate(180deg);
+  }
+}
+
+.edit-task-form__select-options {
+  padding: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  display: block;
+  width: 100%;
+}
+
+.edit-task-form__select-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  font-size: 14px;
+  color: #374151;
+  width: 100%;
+  box-sizing: border-box;
+
+  &:hover {
+    background-color: #f3f4f6;
+  }
+
+  &--selected {
+    background-color: #eef2ff;
+    color: #4f46e5;
+    font-weight: 500;
+  }
+}
+
+.edit-task-form__select-option-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.edit-task-form__input--error,
+.edit-task-form__textarea--error,
+.edit-task-form__select--error {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+.edit-task-form__textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.edit-task-form__error-message {
+  font-size: 12.5px;
+  color: #ef4444;
+  font-weight: 500;
+  margin-top: 2px;
+  line-height: 1.45;
+}
+
+.edit-task-form__tags-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+.edit-task-form__tag-option {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  background: #fff;
+  border-radius: 6px;
+  padding: 5px 9px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.edit-task-form__tag-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #6366f1;
+}
+
+.edit-task-form__tag-label {
+  font-size: 13.5px;
+  font-weight: 400;
+  color: #22223b;
+  cursor: pointer;
+  margin: 0;
+  padding: 0 2px 0 0;
+}
+
+.edit-task-form__tag-color-circle {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin-left: 2px;
+  border: 1px solid #e5e7eb;
+  vertical-align: middle;
+}
+
+.edit-task-form__checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:hover {
+    background-color: #f3f4f6;
+    border-color: #d1d5db;
+  }
+}
+
+.edit-task-form__checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #6366f1;
+  flex-shrink: 0;
+}
+
+.edit-task-form__checkbox-label {
+  font-size: 14px;
+  font-weight: 400;
+  color: #374151;
+  cursor: pointer;
+  margin: 0;
+  user-select: none;
+}
+
+.edit-task-form__submit-button {
+  margin-top: 12px;
+  align-self: flex-start;
+  padding: 11px 26px;
+  border-radius: 9999px;
+  border: none;
+  background: linear-gradient(90deg, #4f46e5, #6366f1 70%);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 8px rgba(99, 102, 241, 0.05);
+  transition:
+    transform 0.09s cubic-bezier(0.53, 0.02, 0.63, 1.52),
+    box-shadow 0.13s cubic-bezier(0.25, 0.45, 0.3, 1.45),
+    opacity 0.16s;
+
+  &:hover {
+    transform: translateY(-1px) scale(1.035);
+    box-shadow: 0 12px 36px rgba(79, 70, 229, 0.18);
+    opacity: 0.96;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+</style>

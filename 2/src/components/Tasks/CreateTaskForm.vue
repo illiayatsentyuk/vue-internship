@@ -117,7 +117,7 @@
 
 </template>
 
-<script setup lang="ts">     
+<script setup lang="ts">
 import { reactive, ref, computed, watch } from 'vue'
 import type { CreateTaskForm, Project } from '@/types'
 import { useTagsStore } from '@/stores/tags'
@@ -131,95 +131,109 @@ const projectsStore = useProjectsStore()
 const availableProjects = projectsStore.projects
 console.log(availableProjects)
 
-const importanceDropdown = ref<InstanceType<typeof Dropdown> & { isOpen?: { value: boolean } } | null>(null)
-const projectDropdown = ref<InstanceType<typeof Dropdown> & { isOpen?: { value: boolean } } | null>(null)
+const importanceDropdown = ref<
+  (InstanceType<typeof Dropdown> & { isOpen?: { value: boolean } }) | null
+>(null)
+const projectDropdown = ref<
+  (InstanceType<typeof Dropdown> & { isOpen?: { value: boolean } }) | null
+>(null)
 const importanceDropdownWasOpened = ref(false)
 
-const importanceOfProject = [{
-  id: 1,
-  name: 'Low',
-  color: '#FF0000',
-}, {
-  id: 2,
-  name: 'Medium',
-  color: '#00FF00',
-}, {
-  id: 3,
-  name: 'High',
-  color: '#FFFF00',
-}, {
-  id: 4,
-  name: 'Critical',
-  color: '#FF00FF',
-}]
+const importanceOfProject = [
+  {
+    id: 1,
+    name: 'Low',
+    color: '#FF0000',
+  },
+  {
+    id: 2,
+    name: 'Medium',
+    color: '#00FF00',
+  },
+  {
+    id: 3,
+    name: 'High',
+    color: '#FFFF00',
+  },
+  {
+    id: 4,
+    name: 'Critical',
+    color: '#FF00FF',
+  },
+]
 
-watch(() => importanceDropdown.value?.isOpen?.value, (isOpen) => {
-  if (isOpen) {
-    importanceDropdownWasOpened.value = true
-  } else if (importanceDropdownWasOpened.value && !form.importance) {
-    v$.value.importance.$touch()
-    importanceDropdownWasOpened.value = false
-  }
-})
+watch(
+  () => importanceDropdown.value?.isOpen?.value,
+  (isOpen) => {
+    if (isOpen) {
+      importanceDropdownWasOpened.value = true
+    } else if (importanceDropdownWasOpened.value && !form.importance) {
+      v$.value.importance.$touch()
+      importanceDropdownWasOpened.value = false
+    }
+  },
+)
 
 const rules = {
-    heading: { required, minLength: minLength(3), maxLength: maxLength(100) },
-    description: { required, minLength: minLength(3), maxLength: maxLength(1000) },
-    timeToEnd: { required },
-    importance: { required },
-    status: { required },
-    tags: { required },
-    project: { required },
+  heading: { required, minLength: minLength(3), maxLength: maxLength(100) },
+  description: { required, minLength: minLength(3), maxLength: maxLength(1000) },
+  timeToEnd: { required },
+  importance: { required },
+  status: { required },
+  tags: { required },
+  project: { required },
 }
 const tagsStore = useTagsStore()
 const availableTags = tagsStore.tags
 
 const form = reactive<CreateTaskForm>({
-    heading: '',
-    description: '',
-    timeToEnd: '',
-    importance: 'low',
-    status: 'Pending',
-    tags: [],
-    project: null,
-    assignedTo:null ,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    attachments: ['Penos1 1', 'Attachment 2'],
-    comments: [],
-    isDone: false,
-    additionalTasks: [],
-    procent: 0,
+  heading: '',
+  description: '',
+  timeToEnd: '',
+  importance: 'low',
+  status: 'Pending',
+  tags: [],
+  project: null,
+  assignedTo: null,
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  attachments: ['Penos1 1', 'Attachment 2'],
+  comments: [],
+  isDone: false,
+  additionalTasks: [],
+  procent: 0,
 })
 const v$ = useVuelidate(rules, form)
 
 const selectedImportanceName = computed(() => {
-    const importance = importanceOfProject.find(imp => imp.name.toLowerCase() === form.importance.toLowerCase())
-    return importance ? importance.name : ''
+  const importance = importanceOfProject.find(
+    (imp) => imp.name.toLowerCase() === form.importance.toLowerCase(),
+  )
+  return importance ? importance.name : ''
 })
 
 const selectImportance = (importance: { id: number; name: string; color: string }) => {
-    form.importance = importance.name.toLowerCase() as 'low' | 'medium' | 'high' | 'critical'
-    importanceDropdown.value?.close()
-    v$.value.importance.$touch()
+  form.importance = importance.name.toLowerCase() as 'low' | 'medium' | 'high' | 'critical'
+  importanceDropdown.value?.close()
+  v$.value.importance.$touch()
 }
 
 const selectedProjectName = computed(() => {
-    return form.project?.heading || ''
+  return form.project?.heading || ''
 })
 
 const selectProject = (project: Project) => {
-    form.project = project
-    projectDropdown.value?.close()
-    v$.value.project.$touch()
+  form.project = project
+  projectDropdown.value?.close()
+  v$.value.project.$touch()
 }
 
 const handleCreateTask = async () => {
-    const result = await v$.value.$validate()
-    if (!result) {
-        return
-    }
-    emit('createTask', form)
+  const result = await v$.value.$validate()
+  if (!result) {
+    return
+  }
+  emit('createTask', form)
 }
 </script>
 
@@ -385,7 +399,7 @@ const handleCreateTask = async () => {
   background: #fff;
   border-radius: 6px;
   padding: 5px 9px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .create-task-form__tag-checkbox {
@@ -420,7 +434,7 @@ const handleCreateTask = async () => {
   padding: 11px 26px;
   border-radius: 9999px;
   border: none;
-  background: linear-gradient(90deg, #4f46e5, #6366f1 70% );
+  background: linear-gradient(90deg, #4f46e5, #6366f1 70%);
   color: #fff;
   font-size: 15px;
   font-weight: 600;
@@ -431,19 +445,14 @@ const handleCreateTask = async () => {
   gap: 8px;
   box-shadow: 0 4px 8px rgba(99, 102, 241, 0.05);
   transition:
-    transform 0.09s cubic-bezier(.53,.02,.63,1.52),
-    box-shadow 0.13s cubic-bezier(.25,.45,.3,1.45),
+    transform 0.09s cubic-bezier(0.53, 0.02, 0.63, 1.52),
+    box-shadow 0.13s cubic-bezier(0.25, 0.45, 0.3, 1.45),
     opacity 0.16s;
 
   &:hover {
     transform: translateY(-1px) scale(1.035);
     box-shadow: 0 12px 36px rgba(79, 70, 229, 0.18);
     opacity: 0.96;
-  }
-
-  &:active {
-    transform: translateY(0) scale(0.98);
-    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.17);
   }
 
   &:disabled {

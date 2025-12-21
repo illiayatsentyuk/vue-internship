@@ -22,7 +22,7 @@ const handleCreateTag = (tag: Omit<Tag, 'id'>) => {
 <style lang="scss" scoped>
 .create-tag-view {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   padding: 32px 96px;
   background: #f9fafb;
 }
@@ -31,5 +31,3 @@ const handleCreateTag = (tag: Omit<Tag, 'id'>) => {
   margin: 0 0 24px 0;
 }
 </style>
-
-

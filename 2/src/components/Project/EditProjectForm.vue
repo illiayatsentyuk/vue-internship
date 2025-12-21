@@ -43,35 +43,35 @@ import { useUsersStore } from '@/stores/users'
 import type { CreateProjectForm, Project } from '@/types'
 const emit = defineEmits(['editProject'])
 const props = defineProps<{
-    project: Project
+  project: Project
 }>()
 const project = props.project
 const usersStore = useUsersStore()
 const availableUsers = usersStore.users
 
 const form = reactive<CreateProjectForm>({
-    heading: project.heading,
-    description: project.description,
-    status: project.status,
-    procent: project.procent,
-    timeToEnd: project.timeToEnd,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    tasks: project.tasks,
-    contributors: project.contributors,
+  heading: project.heading,
+  description: project.description,
+  status: project.status,
+  procent: project.procent,
+  timeToEnd: project.timeToEnd,
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  tasks: project.tasks,
+  contributors: project.contributors,
 })
 
 const rules = {
-    heading: { required, minLength: minLength(3), maxLength: maxLength(100) },
-    description: { required, minLength: minLength(3), maxLength: maxLength(1000) },
+  heading: { required, minLength: minLength(3), maxLength: maxLength(100) },
+  description: { required, minLength: minLength(3), maxLength: maxLength(1000) },
 }
 const v$ = useVuelidate(rules, form)
 const handleEditProject = async () => {
-    const result = await v$.value.$validate()
-    if (!result) {
-        return
-    }
-    emit('editProject', form)
+  const result = await v$.value.$validate()
+  if (!result) {
+    return
+  }
+  emit('editProject', form)
 }
 </script>
 
@@ -171,13 +171,16 @@ const handleEditProject = async () => {
     border-color 0.15s ease,
     box-shadow 0.15s ease,
     background-color 0.15s ease;
-}
-
-.edit-project-form__user-select:focus {
-  outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 1px #6366f1;
-  background: #fff;
+  &:hover {
+    transform: translateY(-1px) scale(1.035);
+    box-shadow: 0 12px 36px rgba(79, 70, 229, 0.18);
+    opacity: 0.96;
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
 }
 
 .edit-project-form__submit-button {
@@ -200,22 +203,16 @@ const handleEditProject = async () => {
     transform 0.09s cubic-bezier(0.53, 0.02, 0.63, 1.52),
     box-shadow 0.13s cubic-bezier(0.25, 0.45, 0.3, 1.45),
     opacity 0.16s;
-}
 
-.edit-project-form__submit-button:hover {
-  transform: translateY(-1px) scale(1.035);
-  box-shadow: 0 12px 36px rgba(79, 70, 229, 0.18);
-  opacity: 0.96;
-}
-
-.edit-project-form__submit-button:active {
-  transform: translateY(0) scale(0.98);
-  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.17);
-}
-
-.edit-project-form__submit-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  box-shadow: none;
+  &:hover {
+    transform: translateY(-1px) scale(1.035);
+    box-shadow: 0 12px 36px rgba(79, 70, 229, 0.18);
+    opacity: 0.96;
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
 }
 </style>

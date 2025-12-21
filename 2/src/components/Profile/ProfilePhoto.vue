@@ -122,4 +122,3 @@ const changeCropVisibility = () => {
   flex-shrink: 0;
 }
 </style>
-

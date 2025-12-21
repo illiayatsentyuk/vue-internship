@@ -17,13 +17,13 @@ const tasksStore = useTasksStore()
 const projectsStore = useProjectsStore()
 const task = tasksStore.getTaskById(Number(route.params.id))
 if (!task) {
-    router.push('/tasks')
+  router.push('/tasks')
 }
 const handleEditTask = (task: TaskComponent) => {
-    console.log(task)
-    tasksStore.editTask(task, Number(route.params.id))
-    projectsStore.updateProjectsProcent()
-    router.push('/tasks')
+  console.log(task)
+  tasksStore.editTask(task, Number(route.params.id))
+  projectsStore.updateProjectsProcent()
+  router.push('/tasks')
 }
 </script>
 
@@ -32,7 +32,7 @@ const handleEditTask = (task: TaskComponent) => {
   width: 100%;
   height: 100%;
   padding: 32px 96px;
-  background: #F9FAFB;
+  background: #f9fafb;
 }
 
 .edit-task-view__title {

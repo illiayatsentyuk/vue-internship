@@ -23,8 +23,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Cropper, CircleStencil } from 'vue-advanced-cropper';
-import 'vue-advanced-cropper/dist/style.css';
+import { Cropper, CircleStencil } from 'vue-advanced-cropper'
+import 'vue-advanced-cropper/dist/style.css'
 import { useUsersStore } from '@/stores/users'
 
 const previewSrc = ref<string | null>(null)
@@ -35,12 +35,11 @@ const cropper = ref(null)
 async function handleAvatarUpload(event: Event) {
   const input = event.target as HTMLInputElement
   const file = input.files?.[0]
-  
+
   if (file) {
     previewSrc.value = URL.createObjectURL(file)
   }
 }
-
 
 const crop = () => {
   const { canvas } = (cropper.value as any).getResult()
@@ -70,7 +69,9 @@ const cancel = () => {
 .cropper-modal {
   background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.1), 0px 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow:
+    0px 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0px 10px 10px -5px rgba(0, 0, 0, 0.04);
   width: 95%;
   max-width: 1000px;
   height: 90vh;
@@ -80,7 +81,6 @@ const cancel = () => {
   animation: slideUp 0.3s ease;
   overflow: hidden;
 }
-
 
 .cropper-modal__avatar-uploader {
   flex: 1;
@@ -188,10 +188,6 @@ const cancel = () => {
     transform: translateY(-1px);
     box-shadow: 0px 4px 8px rgba(79, 70, 229, 0.2);
   }
-
-  &:active {
-    transform: translateY(0);
-  }
 }
 
 .cropper-modal__button--secondary {
@@ -202,10 +198,6 @@ const cancel = () => {
   &:hover {
     background: #f9fafb;
     border-color: #d1d5db;
-  }
-
-  &:active {
-    background: #f3f4f6;
   }
 }
 </style>

@@ -128,7 +128,21 @@ const props = defineProps<{
   task: TaskComponentType
 }>()
 const emit = defineEmits(['addComment'])
-const { heading, importance, timeToEnd, assignedTo, status, description, attachments, comments, id, tags, isDone, additionalTasks, procent } = props.task
+const {
+  heading,
+  importance,
+  timeToEnd,
+  assignedTo,
+  status,
+  description,
+  attachments,
+  comments,
+  id,
+  tags,
+  isDone,
+  additionalTasks,
+  procent,
+} = props.task
 const tasksStore = useTasksStore()
 const router = useRouter()
 
@@ -144,7 +158,10 @@ const handleAddComment = async () => {
 const handleEditTask = () => {
   router.push(`/tasks/${id}/edit`)
 }
-const handleEditAdditionalTask = (additionalTaskId: number, updates?: Partial<{ isDone: boolean }>) => {
+const handleEditAdditionalTask = (
+  additionalTaskId: number,
+  updates?: Partial<{ isDone: boolean }>,
+) => {
   const additionalTask = props.task.additionalTasks.find((task) => task.id === additionalTaskId)
   if (additionalTask) {
     const updatedTask = {
@@ -259,7 +276,7 @@ const handleAddAdditionalTask = async () => {
   font-weight: 500;
   font-style: Medium;
   font-size: 14px;
-  border: 1px solid #E5E7EB;
+  border: 1px solid #e5e7eb;
   cursor: pointer;
   transition: background-color 0.2s ease;
 
@@ -446,7 +463,7 @@ const handleAddAdditionalTask = async () => {
   leading-trim: NONE;
   line-height: 16px;
   letter-spacing: 0%;
-  color: #4B5563;
+  color: #4b5563;
   margin: 0;
 }
 
@@ -477,7 +494,7 @@ const handleAddAdditionalTask = async () => {
 .task-component__attachments-item {
   display: flex;
   padding: 19px;
-  border: 1px solid #E5E7EB;
+  border: 1px solid #e5e7eb;
   justify-content: space-between;
   width: 45%;
   align-items: center;
@@ -563,7 +580,7 @@ const handleAddAdditionalTask = async () => {
 .task-component__additional-tasks-input-field {
   width: 100%;
   padding: 16px;
-  border: 1px solid #E5E7EB;
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
   font-family: Inter;
   font-weight: 400;
@@ -601,7 +618,7 @@ const handleAddAdditionalTask = async () => {
   font-weight: 500;
   font-style: Medium;
   font-size: 14px;
-  border: 1px solid #E5E7EB;
+  border: 1px solid #e5e7eb;
   padding: 10px 16px;
   border-radius: 8px;
   cursor: pointer;
@@ -626,7 +643,7 @@ const handleAddAdditionalTask = async () => {
 .task-component__additional-tasks-item {
   display: flex;
   padding: 19px;
-  border: 1px solid #E5E7EB;
+  border: 1px solid #e5e7eb;
   justify-content: space-between;
   align-items: center;
   background: #ffffff;
@@ -727,7 +744,7 @@ const handleAddAdditionalTask = async () => {
   font-weight: 500;
   font-style: Medium;
   font-size: 14px;
-  border: 1px solid #E5E7EB;
+  border: 1px solid #e5e7eb;
   cursor: pointer;
   transition: background-color 0.2s ease;
 
@@ -786,7 +803,7 @@ const handleAddAdditionalTask = async () => {
 .task-component__comments-input-field {
   width: 100%;
   padding: 16px;
-  border: 1px solid #E5E7EB;
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
   font-family: Inter;
   font-weight: 400;
@@ -824,7 +841,7 @@ const handleAddAdditionalTask = async () => {
   font-weight: 500;
   font-style: Medium;
   font-size: 14px;
-  border: 1px solid #E5E7EB;
+  border: 1px solid #e5e7eb;
   padding: 10px 16px;
   border-radius: 8px;
   margin-bottom: 16px;

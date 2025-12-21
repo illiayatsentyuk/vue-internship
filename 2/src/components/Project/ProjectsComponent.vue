@@ -1,22 +1,13 @@
 <template lang="pug">
-    CAccordion
-      CAccordionItem(:item-key="id")
-        CAccordionHeader {{ heading }}
-        CAccordionBody
-          p.projects-component__description {{ description }}
-          div.projects-component__links
-            RouterLink.projects-component__link(:to="`/projects/${id}`") View Project
-            RouterLink.projects-component__link(:to="`/projects/${id}/edit`") Edit Project
-            RouterLink.projects-component__link(:to="`/projects/${id}/delete`") Delete Project
+    AccordionElement(:items="[project]")
 </template>
 <script setup lang="ts">
 import type { Project as ProjectType } from '@/types'
-import { CAccordion, CAccordionItem, CAccordionHeader, CAccordionBody } from '@coreui/vue'
-import { RouterLink } from 'vue-router'
+import AccordionElement from '@/ui/Accordion/AccordionElement.vue'
 const props = defineProps<{
   project: ProjectType
 }>()
-const { heading, description, id } = props.project
+const { project } = props
 </script>
 
 <style lang="scss" scoped>

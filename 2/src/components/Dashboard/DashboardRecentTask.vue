@@ -145,10 +145,6 @@ const importanceLabel = computed(() => {
   gap: 4px;
 }
 
-.dashboard-recent-task__time-icon {
-  // Icon styles
-}
-
 .dashboard-recent-task__time-text {
   margin: 0;
 }

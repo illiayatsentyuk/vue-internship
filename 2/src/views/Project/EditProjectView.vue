@@ -15,19 +15,22 @@ const router = useRouter()
 const projectsStore = useProjectsStore()
 const project = projectsStore.getProjectById(Number(route.params.id))
 if (!project) {
-    router.push('/projects')
+  router.push('/projects')
 }
 const handleEditProject = (project: Omit<Project, 'id'>) => {
-    projectsStore.editProject({ ...project, contributors: project.contributors || [] }, Number(route.params.id))
-    router.push('/projects')
+  projectsStore.editProject(
+    { ...project, contributors: project.contributors || [] },
+    Number(route.params.id),
+  )
+  router.push('/projects')
 }
 </script>
 <style lang="scss" scoped>
 .edit-project-view {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   padding: 32px 96px;
-  background: #F9FAFB;
+  background: #f9fafb;
 }
 
 .edit-project-view__title {

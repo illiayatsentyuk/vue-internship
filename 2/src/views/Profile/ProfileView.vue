@@ -21,15 +21,28 @@ const currentUser = computed(() => usersStore.getUserById(1))
 if (!currentUser.value) {
   throw new Error('User not found')
 }
-const handleSavePersonalInformation = (user: Omit<User, 'id' | 'password' | 'tasks' | 'projects' | 'createdAt' | 'updatedAt'>) => {
-  usersStore.editUser({ ...user, password: currentUser.value!.password, tasks: currentUser.value!.tasks, projects: currentUser.value!.projects, createdAt: currentUser.value!.createdAt, updatedAt: currentUser.value!.updatedAt, avatar: currentUser.value!.avatar }, currentUser.value!.id)
+const handleSavePersonalInformation = (
+  user: Omit<User, 'id' | 'password' | 'tasks' | 'projects' | 'createdAt' | 'updatedAt'>,
+) => {
+  usersStore.editUser(
+    {
+      ...user,
+      password: currentUser.value!.password,
+      tasks: currentUser.value!.tasks,
+      projects: currentUser.value!.projects,
+      createdAt: currentUser.value!.createdAt,
+      updatedAt: currentUser.value!.updatedAt,
+      avatar: currentUser.value!.avatar,
+    },
+    currentUser.value!.id,
+  )
 }
 </script>
 
 <style lang="scss" scoped>
 .settings-view {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   background: #f9fafb;
   padding: 32px;
   display: flex;

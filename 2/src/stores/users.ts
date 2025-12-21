@@ -21,7 +21,9 @@ export const useUsersStore = defineStore('users', () => {
     return users.value.reduce((max, user) => Math.max(max, user.id), 0)
   })
   function changeAvatar(id: number, avatar: string) {
-    users.value = users.value.map((element) => (element.id === id ? { ...element, avatar } : element))
+    users.value = users.value.map((element) =>
+      element.id === id ? { ...element, avatar } : element,
+    )
   }
 
   function addUser(user: Omit<User, 'id'>) {

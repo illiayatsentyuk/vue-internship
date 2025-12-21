@@ -161,7 +161,7 @@ const handleUpdate = () => {
           createdAt: currentUser.value.createdAt,
           updatedAt: new Date().toISOString(),
         },
-        currentUser.value.id
+        currentUser.value.id,
       )
     }
 
@@ -227,7 +227,9 @@ const handleUpdate = () => {
   border: 1px solid #e5e7eb;
   font-size: 14px;
   color: #111827;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 
   &:focus {
     outline: none;
@@ -274,7 +276,9 @@ const handleUpdate = () => {
 
 .security-settings__password-strength-fill {
   height: 100%;
-  transition: width 0.3s ease, background-color 0.3s ease;
+  transition:
+    width 0.3s ease,
+    background-color 0.3s ease;
   border-radius: 9999px;
 }
 
@@ -402,4 +406,3 @@ const handleUpdate = () => {
   }
 }
 </style>
-

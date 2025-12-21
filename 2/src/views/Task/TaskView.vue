@@ -31,6 +31,6 @@ const handleAddComment = async (comment: string, id: number) => {
   width: 100%;
   height: 100%;
   padding: 32px 96px;
-  background: #F9FAFB;
+  background: #f9fafb;
 }
 </style>

@@ -98,50 +98,52 @@ const emit = defineEmits(['createProject'])
 const usersStore = useUsersStore()
 const availableUsers = usersStore.users
 
-const typeDropdown = ref<InstanceType<typeof Dropdown> & { isOpen?: { value: boolean } } | null>(null)
+const typeDropdown = ref<(InstanceType<typeof Dropdown> & { isOpen?: { value: boolean } }) | null>(
+  null,
+)
 
 const typeOptions = [
-    { value: 'ontrack', label: 'On Track' },
-    { value: 'inprogress', label: 'In Progress' },
-    { value: 'review', label: 'Review' },
+  { value: 'ontrack', label: 'On Track' },
+  { value: 'inprogress', label: 'In Progress' },
+  { value: 'review', label: 'Review' },
 ]
 
 const selectedTypeName = computed(() => {
-    const option = typeOptions.find(opt => opt.value === form.status)
-    return option ? option.label : ''
+  const option = typeOptions.find((opt) => opt.value === form.status)
+  return option ? option.label : ''
 })
 
 const selectType = (type: 'ontrack' | 'inprogress' | 'review') => {
-    form.status = type
-    typeDropdown.value?.close()
+  form.status = type
+  typeDropdown.value?.close()
 }
 
 const form = reactive<CreateProjectForm>({
-    heading: '',
-    description: '',
-    status: 'ontrack',
-    procent: 0,
-    timeToEnd: '',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    tasks: [],
-    contributors: [],
+  heading: '',
+  description: '',
+  status: 'ontrack',
+  procent: 0,
+  timeToEnd: '',
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  tasks: [],
+  contributors: [],
 })
 
 const rules = {
-    heading: { required, minLength: minLength(3), maxLength: maxLength(100) },
-    description: { required, minLength: minLength(3), maxLength: maxLength(1000) },
-    status: { required },
-    procent: { required, minValue: minValue(0), maxValue: maxValue(100) },
-    timeToEnd: { required },
+  heading: { required, minLength: minLength(3), maxLength: maxLength(100) },
+  description: { required, minLength: minLength(3), maxLength: maxLength(1000) },
+  status: { required },
+  procent: { required, minValue: minValue(0), maxValue: maxValue(100) },
+  timeToEnd: { required },
 }
 const v$ = useVuelidate(rules, form)
 const handleCreateProject = async () => {
-    const result = await v$.value.$validate()
-    if (!result) {
-        return
-    }
-    emit('createProject', form)
+  const result = await v$.value.$validate()
+  if (!result) {
+    return
+  }
+  emit('createProject', form)
 }
 </script>
 
@@ -331,12 +333,6 @@ const handleCreateProject = async () => {
   box-shadow: 0 12px 36px rgba(79, 70, 229, 0.18);
   opacity: 0.96;
 }
-
-.create-project-form__submit-button:active {
-  transform: translateY(0) scale(0.98);
-  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.17);
-}
-
 .create-project-form__submit-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;

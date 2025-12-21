@@ -13,17 +13,17 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const tasksStore = useTasksStore()
 const handleCreateTask = (task: TaskComponent) => {
-    tasksStore.addTask(task)
-    router.push('/tasks')
+  tasksStore.addTask(task)
+  router.push('/tasks')
 }
 </script>
 
 <style lang="scss" scoped>
 .create-task-view {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   padding: 32px 96px;
-  background: #F9FAFB;
+  background: #f9fafb;
 }
 
 .create-task-view__title {
