@@ -34,9 +34,9 @@
             span.task-component__heading-progress-header
                 p.task-component__heading-progress-label Progress
                 p.task-component__heading-progress-value 
-                    strong {{ isDone ? '100%' : '0%' }}
+                    strong {{ procent }}%
             .task-component__progress
-                .task-component__progress-bar.task-component__progress-bar--review
+                .task-component__progress-bar.task-component__progress-bar--procent(:style="{ width: procent ? `${procent}%` : '0%' }")
     section.task-component__description
         h2.task-component__description-title Description
         p.task-component__description-text {{ description }}
@@ -50,7 +50,34 @@
                         p.task-component__attachments-item-name {{ attachment }}
                         p.task-component__attachments-item-size 2.2mb
                 img.task-component__attachments-item-download(src="@/assets/task/download-icon.svg" alt="download-icon")
-                
+    section.task-component__additional-tasks
+        h2.task-component__additional-tasks-title Additional Tasks
+        .task-component__additional-tasks-input
+            form.task-component__additional-tasks-form(@submit.prevent="handleAddAdditionalTask")
+                .task-component__additional-tasks-input-wrapper
+                    input.task-component__additional-tasks-input-field(
+                        type="text" 
+                        placeholder="Enter additional task heading" 
+                        v-model="additionalTaskForm.heading" 
+                        :class="{ 'task-component__additional-tasks-input-field--error': v$AdditionalTask.heading.$error }"
+                    )
+                    span.task-component__additional-tasks-error-message(v-if="v$AdditionalTask.heading.$error") {{ v$AdditionalTask.heading.$errors[0].$message }}
+                button.task-component__additional-tasks-submit-button(type="submit") Add Additional Task
+        .task-component__additional-tasks-list
+            .task-component__additional-tasks-item(v-for="additionalTask in additionalTasks" :key="additionalTask.id")
+                .task-component__additional-tasks-item-info
+                    span.task-component__additional-tasks-item-content
+                        p.task-component__additional-tasks-item-name {{ additionalTask.heading }}
+                        p.task-component__additional-tasks-item-description {{ additionalTask.description }}
+                        p.task-component__additional-tasks-item-created-at {{ additionalTask.createdAt }}
+                        p.task-component__additional-tasks-item-updated-at {{ additionalTask.updatedAt }}
+                        label.task-component__additional-tasks-item-checkbox
+                            input.task-component__additional-tasks-item-checkbox-input(
+                                type="checkbox" 
+                                :checked="additionalTask.isDone" 
+                                @change="handleEditAdditionalTask(additionalTask.id)"
+                            )
+                            span.task-component__additional-tasks-item-checkbox-label Done
     section.task-component__comments
         h2.task-component__comments-title Comments
         .task-component__comments-input
@@ -75,23 +102,34 @@ import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
+import { useTasksStore } from '@/stores/tasks'
 
 const rules = {
   comment: { required },
+}
+
+const additionalTaskRules = {
+  heading: { required },
 }
 
 const form = reactive({
   comment: '',
 })
 
+const additionalTaskForm = reactive({
+  heading: '',
+})
+
 const v$ = useVuelidate(rules, form)
+const v$AdditionalTask = useVuelidate(additionalTaskRules, additionalTaskForm)
 
 const props = defineProps<{
   task: TaskComponentType
   addComment: (comment: string, id: number) => void
 }>()
 const emit = defineEmits(['addComment'])
-const { heading, importance, timeToEnd, assignedTo, status, description, attachments, comments, id, tags, isDone } = props.task
+const { heading, importance, timeToEnd, assignedTo, status, description, attachments, comments, id, tags, isDone, additionalTasks, procent } = props.task
+const tasksStore = useTasksStore()
 const router = useRouter()
 
 const handleAddComment = async () => {
@@ -105,6 +143,39 @@ const handleAddComment = async () => {
 }
 const handleEditTask = () => {
   router.push(`/tasks/${id}/edit`)
+}
+const handleEditAdditionalTask = (additionalTaskId: number, updates?: Partial<{ isDone: boolean }>) => {
+  const additionalTask = additionalTasks.find((task) => task.id === additionalTaskId)
+  if (additionalTask) {
+    const updatedTask = {
+      ...additionalTask,
+      ...(updates || { isDone: !additionalTask.isDone }),
+      updatedAt: new Date().toISOString(),
+    }
+    tasksStore.editAdditionalTask(id, updatedTask)
+    tasksStore.updateTasksProcent()
+  }
+}
+const handleDeleteAdditionalTask = (additionalTaskId: number) => {
+  tasksStore.deleteAdditionalTask(id, additionalTaskId)
+  tasksStore.updateTasksProcent()
+}
+const handleAddAdditionalTask = async () => {
+  const isFormValid = await v$AdditionalTask.value.$validate()
+  if (!isFormValid) {
+    return
+  }
+  const newAdditionalTask = {
+    id: 0, // Will be auto-generated by the store
+    heading: additionalTaskForm.heading,
+    isDone: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  }
+  tasksStore.addAdditionalTask(id, newAdditionalTask)
+  tasksStore.updateTasksProcent()
+  additionalTaskForm.heading = ''
+  v$AdditionalTask.value.$reset()
 }
 </script>
 <style lang="scss" scoped>
@@ -450,6 +521,219 @@ const handleEditTask = () => {
   width: 24px;
   height: 24px;
   cursor: pointer;
+}
+
+.task-component__additional-tasks {
+  padding: 27px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 1px 2px 0px #0000000d;
+}
+
+.task-component__additional-tasks-title {
+  font-family: Inter;
+  font-weight: 600;
+  font-style: Semi Bold;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.task-component__additional-tasks-input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.task-component__additional-tasks-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task-component__additional-tasks-input-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.task-component__additional-tasks-input-field {
+  width: 100%;
+  padding: 16px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 16px;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #4f46e5;
+  }
+
+  &--error {
+    border-color: #ef4444;
+
+    &:focus {
+      border-color: #ef4444;
+    }
+  }
+}
+
+.task-component__additional-tasks-error-message {
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 14px;
+  color: #ef4444;
+  margin-top: 4px;
+}
+
+.task-component__additional-tasks-submit-button {
+  background: #4f46e5;
+  color: #ffffff;
+  font-family: Inter;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 14px;
+  border: 1px solid #E5E7EB;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: #4338ca;
+  }
+
+  &:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+  }
+}
+
+.task-component__additional-tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.task-component__additional-tasks-item {
+  display: flex;
+  padding: 19px;
+  border: 1px solid #E5E7EB;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 1px 2px 0px #0000000d;
+}
+
+.task-component__additional-tasks-item-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.task-component__additional-tasks-item-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.task-component__additional-tasks-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.task-component__additional-tasks-item-name {
+  font-family: Inter;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  margin: 0;
+}
+
+.task-component__additional-tasks-item-description {
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.task-component__additional-tasks-item-is-done {
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.task-component__additional-tasks-item-created-at {
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 12px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.task-component__additional-tasks-item-updated-at {
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 12px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.task-component__additional-tasks-item-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 14px;
+  color: #374151;
+}
+
+.task-component__additional-tasks-item-checkbox-input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #4f46e5;
+}
+
+.task-component__additional-tasks-item-checkbox-label {
+  user-select: none;
+}
+
+.task-component__additional-tasks-item-button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #4f46e5;
+  color: #ffffff;
+  font-family: Inter;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 14px;
+  border: 1px solid #E5E7EB;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: #4338ca;
+  }
 }
 
 .task-component__comments {

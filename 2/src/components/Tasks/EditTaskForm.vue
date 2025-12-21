@@ -201,6 +201,8 @@ const form = reactive<CreateTaskForm>({
   attachments: task.attachments,
   comments: task.comments,
   isDone: task.isDone,
+  additionalTasks: task.additionalTasks,
+  procent: task.procent,
 })
 const v$ = useVuelidate(rules, form)
 

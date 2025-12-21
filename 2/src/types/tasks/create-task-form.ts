@@ -1,4 +1,5 @@
 import type { Tag, User, Project } from '@/types'
+import type { AdditionalTask } from './additional-task'
 
 export interface CreateTaskForm {
   heading: string
@@ -14,4 +15,6 @@ export interface CreateTaskForm {
   attachments: string[]
   comments: string[]
   isDone: boolean
+  additionalTasks: AdditionalTask[]
+  procent: number
 }

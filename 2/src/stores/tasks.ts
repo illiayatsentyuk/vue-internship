@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { useUsersStore } from './users'
 import { useProjectsStore } from './projects'
+import type { AdditionalTask } from '@/types/tasks/additional-task'
 
 const usersStore = useUsersStore()
 const availableUsers = usersStore.users
@@ -68,10 +69,51 @@ export const useTasksStore = defineStore('tasks', () => {
       }
     }
   }
+  function editAdditionalTask(taskId: number, additionalTask: AdditionalTask) {
+    const task = tasks.value.find((element) => element.id === taskId)
+    if (task) {
+      task.additionalTasks = task.additionalTasks.map((element) => (element.id === additionalTask.id ? additionalTask : element))
+      updateTasksProcent()
+    }
+  }
+  function deleteAdditionalTask(taskId: number, additionalTaskId: number) {
+    const task = tasks.value.find((element) => element.id === taskId)
+    if (task) {
+      task.additionalTasks = task.additionalTasks.filter((element) => element.id !== additionalTaskId)
+      updateTasksProcent()
+    }
+  }
+  function addAdditionalTask(taskId: number, additionalTask: AdditionalTask) {
+    const task = tasks.value.find((element) => element.id === taskId)
+    if (task) {
+      task.additionalTasks.push({ ...additionalTask, id: returnBiggestAdditionalTaskId.value + 1 })
+      updateTasksProcent()
+    }
+  }
+  
+  const calculateProcent = (task: TaskComponent): number => {
+    const totalAdditionalTasks = task.additionalTasks.length
+    if (totalAdditionalTasks === 0) return 0
+    const totalDone = task.additionalTasks.filter((additionalTask) => additionalTask.isDone).length
+    return Math.round((totalDone / totalAdditionalTasks) * 100)
+  }
+
+  const updateTasksProcent = () => {
+    tasks.value.forEach((task: TaskComponent) => {
+      const newProcent = calculateProcent(task)
+      if (task.procent !== newProcent) {
+        task.procent = newProcent
+      }
+    })
+  }
+
+  const returnBiggestAdditionalTaskId = computed(() => {
+    return tasks.value.reduce((max, task) => Math.max(max, task.additionalTasks.reduce((max, additionalTask) => Math.max(max, additionalTask.id), 0)), 0)
+  })
 
   const returnBiggestId = computed(() => {
     return tasks.value.reduce((max, task) => Math.max(max, task.id), 0)
   })
 
-  return { tasks, editTask, deleteTask, addTask, getTaskById, addCommentToTask, returnBiggestId }
+  return { tasks, editTask, deleteTask, addTask, getTaskById, addCommentToTask, returnBiggestId, editAdditionalTask, deleteAdditionalTask, addAdditionalTask, updateTasksProcent }
 })
